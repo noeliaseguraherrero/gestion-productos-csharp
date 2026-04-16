@@ -1,0 +1,194 @@
+﻿@page
+@model Practica1.Pages.Productos.CrearModel
+@{
+    ViewData["Title"] = "Nuevo Producto - BecariosBD";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+<style>
+    /* 1. CONFIGURACIÓN DEL CUERPO (IGUAL A INICIO - FONDO BLANCO) */
+    nav, .navbar, footer, header:not(.header-home) {
+        display: none !important;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Inter', sans-serif;
+        background-color: #ffffff; /* Fondo Blanco Puro */
+        color: #333;
+    }
+
+    /* 2. CONTENEDOR PRINCIPAL (MISMA POSICIÓN QUE INICIO) */
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        padding: 60px 20px;
+        box-sizing: border-box;
+    }
+
+    /* 3. TARJETA BLANCA (MISMO ANCHO QUE INICIO) */
+    .glass-card {
+        background: #ffffff;
+        padding: 50px;
+        border-radius: 40px;
+        width: 100%;
+        max-width: 1100px; /* Ancho idéntico a la tabla */
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f0f0f0;
+    }
+
+    h1 {
+        margin: 0 0 40px 0;
+        text-align: center;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        font-size: 2.8rem;
+        text-transform: uppercase;
+        color: #1a1a1a;
+    }
+
+    /* 4. CENTRADO DEL FORMULARIO INTERNO */
+    .form-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 0.8rem;
+        color: darkred; /* Tu acento rojo */
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    /* INPUTS ESTILO MINIMALISTA */
+    input {
+        width: 100%;
+        padding: 18px 25px;
+        border-radius: 15px;
+        border: 2px solid #eee;
+        box-sizing: border-box;
+        background-color: #fafafa;
+        color: #333;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+        input:hover, input:focus {
+            background-color: #ffffff;
+            border-color: #1b5e20; /* Verde al enfocar */
+            box-shadow: 0 5px 15px rgba(27, 94, 32, 0.1);
+        }
+
+    /* 5. BOTONES */
+    .btn-container {
+        display: flex;
+        gap: 15px;
+        margin-top: 40px;
+    }
+
+    .btn-cyber {
+        flex: 2;
+        padding: 18px;
+        border-radius: 15px;
+        border: none;
+        background: #1b5e20; /* Verde sólido profesional */
+        color: white;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+        box-shadow: 0 8px 20px rgba(27, 94, 32, 0.15);
+    }
+
+        .btn-cyber:hover {
+            transform: translateY(-3px);
+            background: #2e7d32;
+            box-shadow: 0 12px 25px rgba(27, 94, 32, 0.25);
+        }
+
+    .btn-back {
+        flex: 1;
+        background: #ffffff;
+        color: #666;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+
+        .btn-back:hover {
+            background: #f5f5f5;
+            color: #333;
+            border-color: #ccc;
+        }
+
+    .error-msg {
+        color: #d32f2f;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 5px;
+        display: block;
+    }
+</style>
+
+<div class="main-container">
+    <div class="glass-card">
+        <h1>Nuevo Producto</h1>
+
+        <div class="form-content">
+            <form method="POST">
+                <div class="form-group">
+                    <label asp-for="Producto.Nombre">Nombre del Producto</label>
+                    <input asp-for="Producto.Nombre" placeholder="Ej. Monitor curvo 27\" />
+                    <span asp-validation-for="Producto.Nombre" class="error-msg"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Producto.Precio">Precio de Venta</label>
+                    <input asp-for="Producto.Precio" placeholder="0.00" />
+                    <span asp-validation-for="Producto.Precio" class="error-msg"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Producto.Stock">Stock en Almacén</label>
+                    <input asp-for="Producto.Stock" placeholder="Cant. unidades" />
+                    <span asp-validation-for="Producto.Stock" class="error-msg"></span>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn-cyber">
+                        <i class="bi bi-plus-circle-fill"></i> Registrar
+                    </button>
+                    <a asp-page="./Inicio" class="btn-cyber btn-back">
+                        <i class="bi bi-arrow-left"></i> Volver
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,640 @@
+﻿@page
+@model Practica1.Pages.Productos.InicioModel
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "Panel de Control - BecariosBD";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    /* 1. RESET Y FONDO */
+    nav, .navbar, footer, header:not(.header-home) {
+        display: none !important;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        font-family: 'Inter', sans-serif;
+        background-color: #fcfcfc;
+        color: #333;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 60px 20px;
+    }
+
+    /* 2. TARJETA BLANCA */
+    .glass-card {
+        background: #ffffff;
+        padding: 50px;
+        border-radius: 40px;
+        width: 100%;
+        max-width: 1200px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f0f0f0;
+        position: relative;
+    }
+
+    h1 {
+        margin: 0 0 10px 0;
+        text-align: center;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        font-size: 2.8rem;
+        text-transform: uppercase;
+        color: #1a1a1a;
+    }
+
+    .welcome-user {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 1.1rem;
+        color: #666;
+        font-weight: 400;
+    }
+
+        .welcome-user strong {
+            color: #1976d2;
+            font-weight: 600;
+            border-bottom: 2px solid #e3f2fd;
+        }
+
+    /* 3. BOTÓN CERRAR SESIÓN */
+    .logout-container {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+    }
+
+    .btn-logout {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background-color: #fff5f5;
+        color: #d32f2f;
+        border: 1px solid #ff00001a;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-logout:hover {
+            background-color: #d32f2f;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+    /* 4. BUSCADOR, FILTRO Y BOTÓN AGREGAR */
+    .actions-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        gap: 15px;
+    }
+
+    .filters-group {
+        display: flex;
+        gap: 15px;
+        flex-grow: 1;
+        max-width: 800px;
+    }
+
+    .search-wrapper {
+        position: relative;
+        flex-grow: 2;
+    }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+    #inputBusqueda {
+        width: 100%;
+        padding: 15px 15px 15px 50px;
+        border-radius: 18px;
+        border: 1px solid #eee;
+        background: #f9f9f9;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+        #inputBusqueda:focus {
+            background: #fff;
+            border-color: #1976d2;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+    /* Estilo para el Selector de Creador */
+    .filter-wrapper {
+        flex-grow: 1;
+        min-width: 200px;
+    }
+
+    #selectUsuario {
+        width: 100%;
+        padding: 15px;
+        border-radius: 18px;
+        border: 1px solid #eee;
+        background: #f9f9f9;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23aaa' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+    }
+
+        #selectUsuario:focus {
+            border-color: #1976d2;
+            background-color: #fff;
+        }
+
+    .btn-add-cyber {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        border-radius: 15px;
+        background: #1b5e20;
+        color: #ffffff;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(27,94,32,0.15);
+        white-space: nowrap;
+    }
+
+        .btn-add-cyber:hover {
+            transform: translateY(-3px);
+            background: #2e7d32;
+            color: white;
+        }
+
+    /* 5. PAGINACIÓN */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 30px;
+    }
+
+    .btn-page {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: white;
+        border: 1px solid #eee;
+        color: #333;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+        .btn-page:hover:not(.disabled) {
+            background: #1976d2;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-page.active {
+            background: #1976d2;
+            color: white;
+            border-color: #1976d2;
+        }
+
+        .btn-page.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+
+    .page-info {
+        font-size: 0.9rem;
+        color: #777;
+        margin: 0 10px;
+    }
+
+    /* 6. RESUMEN DEBAJO */
+    .summary-outer-container {
+        width: 100%;
+        max-width: 1200px;
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .summary-card {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 25px;
+        border: 1px solid #f0f0f0;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            border-color: #e0e0e0;
+        }
+
+        .summary-card i {
+            font-size: 1.8rem;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+        }
+
+    .bg-blue {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .bg-green {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .bg-orange {
+        background: #fff3e0;
+        color: #ef6c00;
+    }
+
+    .summary-info h4 {
+        margin: 0;
+        font-size: 0.75rem;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .summary-info p {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #333;
+    }
+
+    /* 7. TABLA */
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .custom-table th {
+            text-align: left;
+            padding: 20px 15px;
+            color: darkred;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .custom-table td {
+            padding: 20px 15px;
+            border-bottom: 1px solid #f8f8f8;
+        }
+
+    .btn-action {
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        margin-right: 8px;
+        border: 1px solid #eee;
+    }
+
+    .btn-edit {
+        background: #ffffff;
+        color: #1b5e20;
+        border-color: #c8e6c9;
+    }
+
+        .btn-edit:hover {
+            background: #1b5e20;
+            color: white;
+        }
+
+    .btn-delete {
+        background: #ffffff;
+        color: #d32f2f;
+        border-color: #ffcdd2;
+    }
+
+        .btn-delete:hover {
+            background: #d32f2f;
+            color: white;
+        }
+
+    .btn-detail {
+        background: #ffffff;
+        color: #1976d2;
+        border-color: #bbdefb;
+    }
+
+        .btn-detail:hover {
+            background: #1976d2;
+            color: white;
+        }
+
+    .empty-state-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 0;
+        gap: 15px;
+    }
+
+    .empty-icon-circle {
+        background: #f8f9fa;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #adb5bd;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="main-container">
+    <div class="glass-card">
+        <div class="logout-container">
+            <a asp-page="/Index" asp-page-handler="Logout" class="btn-logout">
+                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+            </a>
+        </div>
+
+        <h1>Base de Datos Becarios</h1>
+        <div class="welcome-user">
+            <i class="bi bi-person-circle"></i> Sesión iniciada como: <strong>@User.Identity.Name</strong>
+        </div>
+
+        <div class="actions-bar">
+            <form method="get" class="filters-group" id="formFiltros">
+                <div class="search-wrapper">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="buscar" id="inputBusqueda"
+                           placeholder="Buscar producto..."
+                           value="@Model.FiltroActual" autocomplete="off">
+                </div>
+
+                <div class="filter-wrapper">
+                    <select name="usuarioId" id="selectUsuario" onchange="this.form.submit()">
+                        <option value="">Todos los creadores</option>
+                        @if (Model.Usuarios != null)
+                        {
+                            @foreach (var usuario in Model.Usuarios)
+                            {
+                                <option value="@usuario.Id" selected="@(Model.UsuarioSeleccionadoId == usuario.Id ? "selected" : null)">
+                                    @usuario.Nombre
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </form>
+
+            <a class="btn-add-cyber" asp-page="Crear">
+                <i class="bi bi-plus-circle-dotted"></i> Agregar Nuevo Producto
+            </a>
+        </div>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-page="/Usuarios/Index" class="btn-action btn-detail" style="border-color: #1976d2; color: #1976d2;">
+                <i class="bi bi-people"></i> Gestionar Usuarios
+            </a>
+        }
+
+        <div style="overflow-x: auto;">
+            <table class="custom-table" id="tablaProductos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Creador</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Registro</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                    }
+
+                    @if (Model.productos.Any())
+                    {
+                        @foreach (var producto in Model.productos)
+                        {
+                            <tr>
+                                <td style="color: #999; font-weight: 700;">#@producto.Id</td>
+                                <td style="font-weight: 600; color: #1a1a1a;">@producto.Nombre</td>
+                                <td style="font-weight: 500; color: #1976d2;">
+                                    <i class="bi bi-person"></i> @(producto.Creador?.Nombre?.Trim() ?? "Admin")
+                                </td>
+                                <td style="font-weight: 500;">$@producto.Precio.ToString("N2")</td>
+                                <td>
+                                    @if (producto.Stock < 10)
+                                    {
+                                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px; background-color: #fee2e2; color: #991b1b; font-weight: 800; font-size: 0.9rem; border: 1px solid #fecaca;">
+                                            <i class="bi bi-exclamation-circle-fill"></i> @producto.Stock
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span style="font-weight: 600; color: #1b5e20; padding-left: 12px;">
+                                            @producto.Stock
+                                        </span>
+                                    }
+                                </td>
+                                <td style="font-size: 0.85rem; color: #666;">@producto.FechaCreacion.ToShortDateString()</td>
+                                <td>
+                                    @* Lógica de Permisos: Es el dueño O es Administrador *@
+                                    @if (currentUserId == producto.UsuarioId.ToString() || User.IsInRole("Admin"))
+                                    {
+                                        <a class="btn-action btn-edit" asp-page="Editar" asp-route-id="@producto.Id">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </a>
+                                        <a class="btn-action btn-delete" asp-page="Borrar" asp-route-id="@producto.Id">
+                                            <i class="bi bi-trash3"></i> Borrar
+                                        </a>
+                                    }
+                                    <a class="btn-action btn-detail" asp-page="Detalle" asp-route-id="@producto.Id">
+                                        <i class="bi bi-eye"></i> Detalle
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <div class="empty-state-container">
+                                    <div class="empty-icon-circle">
+                                        <i class="bi bi-search" style="font-size: 2.5rem;"></i>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <h3 style="margin: 0; font-weight: 700; color: #343a40;">No se encontraron productos</h3>
+                                        <p style="margin: 5px 0 0 0; color: #6c757d;">No hay coincidencias en la base de datos.</p>
+                                    </div>
+                                    <a asp-page="./Inicio" style="color: #1976d2; font-weight: 600; text-decoration: underline;">
+                                        Limpiar filtros y ver todos
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.TotalPaginas > 1)
+        {
+            <div class="pagination-container">
+                @if (Model.PaginaActual > 1)
+                {
+                    <a asp-page="./Inicio" asp-route-pagina="@(Model.PaginaActual - 1)"
+                       asp-route-buscar="@Model.FiltroActual"
+                       asp-route-usuarioId="@Model.UsuarioSeleccionadoId" class="btn-page">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                }
+                else
+                {
+                    <span class="btn-page disabled"><i class="bi bi-chevron-left"></i></span>
+                }
+
+                <span class="page-info">Página <strong>@Model.PaginaActual</strong> de @Model.TotalPaginas</span>
+
+                @if (Model.PaginaActual < Model.TotalPaginas)
+                {
+                    <a asp-page="./Inicio" asp-route-pagina="@(Model.PaginaActual + 1)"
+                       asp-route-buscar="@Model.FiltroActual"
+                       asp-route-usuarioId="@Model.UsuarioSeleccionadoId" class="btn-page">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                }
+                else
+                {
+                    <span class="btn-page disabled"><i class="bi bi-chevron-right"></i></span>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="summary-outer-container">
+        <div class="summary-card">
+            <i class="bi bi-boxes bg-blue"></i>
+            <div class="summary-info">
+                <h4>Total Productos</h4>
+                <p>@Model.TotalProductos</p>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <i class="bi bi-currency-dollar bg-green"></i>
+            <div class="summary-info">
+                <h4>Valor Inventario</h4>
+                <p>@Model.ValorInventario.ToString("N2")$</p>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <i class="bi bi-exclamation-triangle bg-orange"></i>
+            <div class="summary-info">
+                <h4>Stock Crítico (< 10)</h4>
+                <p>@Model.StockBajoCount</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 🔍 LÓGICA DE FILTRADO UNIFICADA
+    let timer;
+    const inputBusqueda = document.getElementById('inputBusqueda');
+    const formFiltros = document.getElementById('formFiltros');
+
+    // Búsqueda con retardo al escribir
+    inputBusqueda.addEventListener('input', function() {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            formFiltros.submit();
+        }, 500);
+    });
+
+    // Mantener el foco al final del texto después de recargar
+    if (inputBusqueda.value.length > 0) {
+        inputBusqueda.focus();
+        inputBusqueda.setSelectionRange(inputBusqueda.value.length, inputBusqueda.value.length);
+    }
+
+    // 🔔 FEEDBACK VISUAL (TOASTS)
+    document.addEventListener("DOMContentLoaded", function() {
+        var mensaje = '@TempData["Mensaje"]';
+        var tipo = '@TempData["Tipo"]';
+
+        if (mensaje && mensaje !== '') {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+
+            Toast.fire({
+                icon: tipo || 'success',
+                title: mensaje
+            });
+        }
+    });
+</script>

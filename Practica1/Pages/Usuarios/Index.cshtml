@@ -1,0 +1,382 @@
+﻿@page
+@model Practica1.Pages.Usuarios.IndexModel
+@{
+    ViewData["Title"] = "Gestión de Usuarios - BecariosBD";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    /* 1. RESET Y ESTILO BASE */
+    nav, .navbar, footer, header:not(.header-home) {
+        display: none !important;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        font-family: 'Inter', sans-serif;
+        background-color: #fcfcfc;
+        color: #333;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 60px 20px;
+    }
+
+    .glass-card {
+        background: #ffffff;
+        padding: 50px;
+        border-radius: 40px;
+        width: 100%;
+        max-width: 1100px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f0f0f0;
+        position: relative;
+    }
+
+    h1 {
+        margin: 0 0 10px 0;
+        text-align: center;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        color: #1a1a1a;
+    }
+
+    /* 2. BOTÓN VOLVER CON HOVER MEJORADO */
+    .btn-back-cyber {
+        text-decoration: none;
+        color: #666;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s ease;
+        padding: 5px 10px;
+        border-radius: 8px;
+    }
+
+        .btn-back-cyber:hover {
+            color: #1976d2;
+            background-color: #e3f2fd;
+            transform: translateX(-5px);
+        }
+
+    /* 3. BOTÓN AGREGAR (VERDE) */
+    .btn-add-cyber {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        border-radius: 15px;
+        background: #1b5e20; /* Verde */
+        color: #ffffff;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 15px rgba(27, 94, 32, 0.2);
+    }
+
+        .btn-add-cyber:hover {
+            background: #2e7d32;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(27, 94, 32, 0.3);
+        }
+
+    /* 4. TABLA */
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .custom-table th {
+            text-align: left;
+            padding: 20px 15px;
+            color: darkred;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .custom-table td {
+            padding: 20px 15px;
+            border-bottom: 1px solid #f8f8f8;
+            vertical-align: middle;
+        }
+
+    /* 5. ESTADOS Y ACCIONES */
+    .btn-status {
+        border: none;
+        padding: 6px 15px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .btn-active {
+        background-color: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+    }
+
+    .btn-inactive {
+        background-color: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+    }
+
+    /* Botón Editar (Verde) */
+    .btn-edit-user {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #c8e6c9;
+        background: white;
+        color: #1b5e20;
+        transition: all 0.2s ease;
+    }
+
+        .btn-edit-user:hover {
+            background: #1b5e20;
+            color: white;
+            transform: scale(1.1);
+        }
+
+    /* Botón Borrar (Rojo) */
+    .btn-delete-user {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ffcdd2;
+        background: white;
+        color: #d32f2f;
+        transition: all 0.2s ease;
+    }
+
+        .btn-delete-user:hover {
+            background: #d32f2f;
+            color: white;
+            transform: scale(1.1);
+        }
+
+    /* Modales */
+    .modal-content {
+        border-radius: 30px;
+        border: none;
+        padding: 10px;
+    }
+
+    .btn-save-modal {
+        background: #1b5e20;
+        color: white;
+        border-radius: 15px;
+        font-weight: 700;
+        padding: 12px;
+        transition: all 0.3s;
+        border: none;
+    }
+
+        .btn-save-modal:hover {
+            background: #2e7d32;
+            transform: translateY(-2px);
+        }
+</style>
+
+<div class="main-container">
+    <div class="glass-card">
+
+        <div class="d-flex justify-content-start mb-3">
+            <a asp-page="/Productos/Inicio" class="btn-back-cyber">
+                <i class="bi bi-arrow-left"></i> Volver al Panel
+            </a>
+        </div>
+
+        <h1>Control de Becarios</h1>
+        <p class="text-center text-muted small uppercase fw-bold" style="letter-spacing: 2px;">Gestión Administrativa</p>
+
+        <div class="d-flex justify-content-between align-items-center my-4">
+            <div class="search-info">
+                <span class="badge bg-light text-dark p-2 px-3 rounded-pill border fw-bold">
+                    <i class="bi bi-people-fill me-2 text-success"></i> @Model.Usuarios.Count Usuarios
+                </span>
+            </div>
+            <button class="btn-add-cyber" data-bs-toggle="modal" data-bs-target="#modalCrear">
+                <i class="bi bi-person-plus-fill"></i> Agregar Usuario
+            </button>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Nombre de Usuario</th>
+                        <th>Rango</th>
+                        <th>Estado Acceso</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var usuario in Model.Usuarios)
+                    {
+                        <tr>
+                            <td style="font-weight: 600;">@usuario.Nombre</td>
+                            <td>
+                                <span class="fw-bold small" style="color: @(usuario.Rol == "Admin" ? "#1976d2" : "#777")">
+                                    <i class="bi @(usuario.Rol == "Admin" ? "bi-shield-lock" : "bi-person") me-1"></i>
+                                    @usuario.Rol.ToUpper()
+                                </span>
+                            </td>
+                            <td>
+                                <form method="post" asp-page-handler="CambiarEstado" asp-route-id="@usuario.Id">
+                                    <button class="btn-status @(usuario.Activo ? "btn-active" : "btn-inactive")" title="Click para cambiar estado">
+                                        <i class="bi @(usuario.Activo ? "bi-check-circle-fill" : "bi-x-circle-fill")"></i>
+                                        @(usuario.Activo ? "Activo" : "Inactivo")
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <button class="btn-edit-user" data-bs-toggle="modal" data-bs-target="#modalEditar-@usuario.Id" title="Editar">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+
+                                    @if (User.Identity.Name != usuario.Nombre)
+                                    {
+                                        <form method="post" asp-page-handler="Eliminar" asp-route-id="@usuario.Id"
+                                              onsubmit="return confirm('¿Seguro que quieres borrar a este usuario?')">
+                                            <button class="btn-delete-user" title="Eliminar">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+
+                        <div class="modal fade" id="modalEditar-@usuario.Id" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form method="post" asp-page-handler="Editar" asp-route-id="@usuario.Id">
+                                        <div class="modal-header border-0">
+                                            <h5 class="fw-bold"><i class="bi bi-pencil-square text-success me-2"></i>Editar @usuario.Nombre</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-4">
+                                                <label class="form-label small fw-bold text-muted">CONTRASEÑA ACTUAL</label>
+                                                <div class="p-3 rounded-3 border bg-light text-center font-monospace fw-bold">
+                                                    @usuario.Contraseña
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-bold">NUEVA CONTRASEÑA</label>
+                                                <input type="password" name="nuevaPass" class="form-control" placeholder="Dejar en blanco si no cambia">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-bold">ROL DEL USUARIO</label>
+                                                <select name="nuevoRol" class="form-select">
+                                                    <option value="Usuario" selected="@(usuario.Rol == "Usuario")">Usuario</option>
+                                                    <option value="Admin" selected="@(usuario.Rol == "Admin")">Administrador</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="p-3 text-center">
+                                            <button type="submit" class="btn-save-modal w-100">
+                                                GUARDAR CAMBIOS
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCrear" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="Crear">
+                <div class="modal-header border-0">
+                    <h5 class="fw-bold"><i class="bi bi-person-plus-fill text-success me-2"></i>Nuevo Registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="small fw-bold">NOMBRE DE USUARIO</label>
+                        <input type="text" asp-for="NuevoUsuario.Nombre" class="form-control" placeholder="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small fw-bold">CONTRASEÑA</label>
+                        <input type="password" asp-for="NuevoUsuario.Contraseña" class="form-control" placeholder="Contraseña" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small fw-bold">ROL</label>
+                        <select asp-for="NuevoUsuario.Rol" class="form-select">
+                            <option value="Usuario">Usuario</option>
+                            <option value="Admin">Administrador</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <button type="submit" class="btn-save-modal w-100">
+                        CREAR USUARIO
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var mensaje = '@TempData["Mensaje"]';
+        var tipo = '@TempData["Tipo"]';
+
+        if (mensaje) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true
+            });
+
+            Toast.fire({
+                icon: tipo || 'info',
+                title: mensaje
+            });
+        }
+    });
+</script>
