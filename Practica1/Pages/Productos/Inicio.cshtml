@@ -51,6 +51,8 @@
         font-size: clamp(1.6rem, 4vw, 2.8rem);
         text-transform: uppercase;
         color: #1a1a1a;
+        /* Dejar espacio para el botón logout en pantallas medias */
+        padding: 0 130px;
     }
 
     .welcome-user {
@@ -66,6 +68,7 @@
             font-weight: 600;
             border-bottom: 2px solid #e3f2fd;
         }
+
 
     /* LOGOUT */
     .logout-container {
@@ -395,7 +398,47 @@
         color: #333;
     }
 
-    /* RESPONSIVE */
+    /*RESPONSIVE*/
+    @@media (max-width: 991px) {
+        h1
+
+    {
+        padding: 0 100px; 
+        font-size: clamp(1.2rem, 3.5vw, 2rem);
+    }
+
+    .btn-logout {
+        font-size: 0.75rem;
+        padding: 7px 10px;
+    }
+
+        .btn-logout .logout-text {
+            display: none;
+        }
+
+    }
+
+    @@media (max-width: 768px) {
+        h1
+
+    {
+        padding: 0;
+        font-size: clamp(1.4rem, 5vw, 2rem);
+    }
+
+    .logout-container {
+        position: static;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btn-logout .logout-text {
+        display: none;
+    }
+
+    }
+
     @@media (max-width: 768px) {
         .glass-card
 
@@ -424,24 +467,74 @@
         justify-content: center;
     }
 
-    .search-wrapper {
-        min-width: unset;
-    }
-
-    .btn-action .btn-text {
+    /* OCULTAR TABLA NORMAL */
+    .table-wrapper {
         display: none;
     }
 
-    .btn-action {
-        padding: 8px 10px;
+    /* TARJETAS DE PRODUCTO */
+    .product-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
 
-    .custom-table th, .custom-table td {
-        padding: 12px 8px;
+    .product-card {
+        background: #fff;
+        border: 1px solid #f0f0f0;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
 
-    .logout-text {
-        display: none !important;
+    .product-card-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 10px 0;
+        border-bottom: 1px solid #f5f5f5;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .product-card-row:last-child {
+            border-bottom: none;
+        }
+
+    .product-card-label {
+        font-size: 0.72rem;
+        color: darkred;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    .product-card-value {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        text-align: right;
+    }
+
+    .product-card-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+        .product-card-actions .btn-action {
+            flex: 1;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+    }
+
+    @@media (min-width: 769px) {
+        .product-cards
+
+    {
+        display: none;
     }
 
     }
@@ -453,53 +546,8 @@
         padding: 20px 10px;
     }
 
-    .glass-card {
-        padding: 20px 12px;
-    }
-
     .summary-outer-container {
         grid-template-columns: 1fr;
-    }
-
-    }
-
-    /* ... dentro de tu etiqueta <style> ... */
-
-    /* ESTO SOLUCIONA EL SOLAPAMIENTO (Rango iPad y Tablets) */
-@@media (max-width: 1024px) {
-        .logout-container
-
-    {
-        position: relative; /* Cambia de absolute a relative para que no flote sobre el H1 */
-        top: auto;
-        right: auto;
-        display: flex;
-        justify-content: flex-end; /* Lo mantiene a la derecha pero dentro del flujo */
-        margin-bottom: 10px;
-    }
-
-    h1 {
-        margin-top: 10px; /* Espacio extra al quitar el botón de arriba */
-        padding: 0 10px;
-        line-height: 1.2;
-    }
-
-    }
-
-    /* Ajustes adicionales para móviles (Ya lo tenías, asegúrate que se mantenga así) */
-@@media (max-width: 768px) {
-        h1
-
-    {
-        font-size: 1.8rem;
-    }
-
-    .logout-container {
-        justify-content: center; /* En móviles queda mejor centrado */
-    }
-
-    .logout-text {
-        display: none !important; /* Oculta el texto para que solo quede el icono si es muy pequeño */
     }
 
     }
@@ -628,6 +676,79 @@
                     }
                 </tbody>
             </table>
+        </div>
+
+        <!-- TARJETAS MÓVIL -->
+        <div class="product-cards">
+            @if (Model.productos.Any())
+            {
+                @foreach (var producto in Model.productos)
+                {
+                    <div class="product-card">
+                        <div class="product-card-row">
+                            <span class="product-card-label">Código</span>
+                            <span class="product-card-value" style="color:#666;">@producto.CodigoProducto</span>
+                        </div>
+                        <div class="product-card-row">
+                            <span class="product-card-label">Nombre</span>
+                            <span class="product-card-value">@producto.Nombre</span>
+                        </div>
+                        <div class="product-card-row">
+                            <span class="product-card-label">Creador</span>
+                            <span class="product-card-value" style="color:#1976d2;">
+                                <i class="bi bi-person"></i> @(producto.Creador?.Nombre?.Trim() ?? "Admin")
+                            </span>
+                        </div>
+                        <div class="product-card-row">
+                            <span class="product-card-label">Precio</span>
+                            <span class="product-card-value">$@producto.Precio.ToString("N2")</span>
+                        </div>
+                        <div class="product-card-row">
+                            <span class="product-card-label">Stock</span>
+                            <span class="product-card-value">
+                                @if (producto.Stock < 10)
+                                {
+                                    <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;background:#fee2e2;color:#991b1b;font-weight:800;font-size:0.85rem;border:1px solid #fecaca;">
+                                        <i class="bi bi-exclamation-circle-fill"></i> @producto.Stock
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span style="color:#1b5e20;">@producto.Stock</span>
+                                }
+                            </span>
+                        </div>
+                        <div class="product-card-row">
+                            <span class="product-card-label">Registro</span>
+                            <span class="product-card-value" style="color:#666;font-size:0.85rem;">@producto.FechaCreacion.ToShortDateString()</span>
+                        </div>
+
+                        <div class="product-card-actions">
+                            @if (currentUserId == producto.UsuarioId.ToString() || User.IsInRole("Admin"))
+                            {
+                                <a class="btn-action btn-edit" asp-page="Editar" asp-route-id="@producto.Id">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <a class="btn-action btn-delete" asp-page="Borrar" asp-route-id="@producto.Id">
+                                    <i class="bi bi-trash3"></i> Borrar
+                                </a>
+                            }
+                            <a class="btn-action btn-detail" asp-page="Detalle" asp-route-id="@producto.Id">
+                                <i class="bi bi-eye"></i> Detalle
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="product-card" style="text-align:center;padding:40px 20px;">
+                    <i class="bi bi-search" style="font-size:2rem;color:#adb5bd;display:block;margin-bottom:10px;"></i>
+                    <h3 style="margin:0;font-weight:700;color:#343a40;">No se encontraron productos</h3>
+                    <p style="color:#6c757d;margin:5px 0 10px 0;">No hay coincidencias en la base de datos.</p>
+                    <a asp-page="./Inicio" style="color:#1976d2;font-weight:600;text-decoration:underline;">Limpiar filtros</a>
+                </div>
+            }
         </div>
 
         @if (Model.TotalPaginas > 1)
