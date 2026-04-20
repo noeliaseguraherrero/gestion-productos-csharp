@@ -4,7 +4,7 @@
 
 Esta plataforma es una solución integral para el control de inventarios y la administración avanzada de usuarios. Utiliza el modelo de desarrollo basado en páginas de **ASP.NET Core (Razor Pages)**, lo que permite una arquitectura robusta, segura y escalable.
 
-## Funcionalidades Principales
+## 📋 Funcionalidades Principales
 
 ### 🔐 Seguridad y Gestión de Acceso
 * **Autenticación y Sesiones:** Sistema de login seguro para el control de acceso.
@@ -23,7 +23,7 @@ Esta plataforma es una solución integral para el control de inventarios y la ad
     * **Lógica de Sincronización:** Si el producto ya existe (basado en el código único), se actualiza automáticamente.
     * **Control de Errores:** Reporte detallado post-importación que indica: productos añadidos, modificados, errores específicos y códigos duplicados.
 
-## 🛠️ Tecnologías Utilizadas
+## 💻 Tecnologías Utilizadas
 * **Backend:** C# con .NET Core (ASP.NET Core Razor Pages).
 * **Frontend:** HTML, CSS, JavaScript y sintaxis Razor para vistas dinámicas.
 * **Base de Datos:** SQL Server con filtrado y persistencia optimizada.
