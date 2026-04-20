@@ -8,7 +8,7 @@ Esta plataforma es una solución integral para el control de inventarios y la ad
 
 ### 🔐 Seguridad y Gestión de Acceso
 * **Autenticación y Sesiones:** Sistema de login seguro para el control de acceso.
-* **Control de Acceso basado en Roles (RBAC):**
+* **Control de Acceso basado en Roles:**
     * **Administrador:** Acceso total. Gestión de cuentas (borrado, cambio de contraseñas, activación/desactivación de usuarios).
     * **Usuario:** Permisos para ver todos los productos, pero con restricción de edición y borrado solo a sus propios registros.
 * **Recuperación de Contraseña:** Flujo automatizado mediante envío de correo electrónico con enlace único para restablecimiento de credenciales en la base de datos.
