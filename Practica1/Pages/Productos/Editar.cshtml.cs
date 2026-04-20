@@ -10,6 +10,7 @@ namespace Practica1.Pages.Productos
     public class EditarModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+
         public EditarModel(ApplicationDbContext context)
         {
             _context = context;
@@ -21,7 +22,6 @@ namespace Practica1.Pages.Productos
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Producto = await _context.Producto.FirstOrDefaultAsync(p => p.Id == id);
-
             if (Producto == null)
             {
                 return NotFound();
@@ -38,21 +38,31 @@ namespace Practica1.Pages.Productos
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // ?? EL CAMBIO: Eliminamos el objeto Creador de la validación
             ModelState.Remove("Producto.Creador");
 
             if (!ModelState.IsValid)
-            {
                 return Page();
-            }
 
             var productoDb = await _context.Producto.AsNoTracking().FirstOrDefaultAsync(p => p.Id == Producto.Id);
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (productoDb == null || productoDb.UsuarioId.ToString() != userId)
             {
                 return Forbid();
             }
+
+            // ? NUEVO: Comprobar duplicado excluyendo el propio producto
+            bool codigoExiste = await _context.Producto
+                .AnyAsync(p => p.CodigoProducto == Producto.CodigoProducto
+                            && p.Id != Producto.Id);
+
+            if (codigoExiste)
+            {
+                ModelState.AddModelError("Producto.CodigoProducto",
+                    "Ya existe un producto con ese código. Usa uno diferente.");
+                return Page();
+            }
+            // ? FIN NUEVO
 
             // Mantenemos los datos originales de la DB que no están en el formulario
             Producto.UsuarioId = productoDb.UsuarioId;
@@ -76,9 +86,8 @@ namespace Practica1.Pages.Productos
                 }
             }
 
-            // Notificación de edición
             TempData["Mensaje"] = "Cambios guardados correctamente";
-            TempData["Tipo"] = "info"; // Usamos 'info' o 'success'
+            TempData["Tipo"] = "info";
             return RedirectToPage("./Inicio");
         }
 

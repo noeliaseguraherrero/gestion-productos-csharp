@@ -1,13 +1,18 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema; // Necesario para [ForeignKey]
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore; // <-- AÑADIR
 
 namespace Practica1.Modelos
 {
+    [Index(nameof(CodigoProducto), IsUnique = true)] // <-- AÑADIR
     public class Producto
     {
         [Key]
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "El código de producto es obligatorio")]
+        public string CodigoProducto { get; set; }
 
         [Required(ErrorMessage = "El nombre es obligatorio")]
         public string Nombre { get; set; }
@@ -17,15 +22,12 @@ namespace Practica1.Modelos
         public decimal Precio { get; set; }
 
         public int Stock { get; set; }
-
         public DateTime FechaCreacion { get; set; }
 
-        // --- NUEVAS COLUMNAS PARA EL CREADOR ---
-
         [Required]
-        public int UsuarioId { get; set; } // Esta es la columna física en la DB
+        public int UsuarioId { get; set; }
 
         [ForeignKey("UsuarioId")]
-        public virtual Usuario Creador { get; set; } // Esta es la propiedad de navegación
+        public virtual Usuario Creador { get; set; }
     }
 }

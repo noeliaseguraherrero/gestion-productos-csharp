@@ -49,10 +49,20 @@ namespace Practica1.Pages.Productos
             // 2. CONSULTA BASE
             IQueryable<Producto> consulta = _context.Producto.Include(p => p.Creador);
 
-            // 3. FILTRO BUSCADOR (Nombre del producto)
+            // 3. FILTRO BUSCADOR (Todos los campos - compatible con EF + SQL Server)
             if (!string.IsNullOrEmpty(buscar))
             {
-                consulta = consulta.Where(p => p.Nombre.Contains(buscar));
+                // Intentamos parsear el texto como número y fecha para los campos numéricos
+                decimal.TryParse(buscar, out decimal precioBuscar);
+                int.TryParse(buscar, out int stockBuscar);
+
+                consulta = consulta.Where(p =>
+                    p.Nombre.Contains(buscar) ||
+                    p.CodigoProducto.Contains(buscar) ||
+                    p.Creador.Nombre.Contains(buscar) ||
+                    p.Precio == precioBuscar ||
+                    p.Stock == stockBuscar
+                );
             }
 
             // 4. FILTRO USUARIO (Por ID de autor)

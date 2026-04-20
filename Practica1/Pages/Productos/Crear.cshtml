@@ -158,6 +158,13 @@
 
         <div class="form-content">
             <form method="POST">
+
+                <div class="form-group">
+                    <label asp-for="Producto.CodigoProducto">Código de Producto</label>
+                    <input asp-for="Producto.CodigoProducto" placeholder="Ej. PROD-001" />
+                    <span asp-validation-for="Producto.CodigoProducto" class="error-msg"></span>
+                </div>
+
                 <div class="form-group">
                     <label asp-for="Producto.Nombre">Nombre del Producto</label>
                     <input asp-for="Producto.Nombre" placeholder="Ej. Monitor curvo 27\" />
