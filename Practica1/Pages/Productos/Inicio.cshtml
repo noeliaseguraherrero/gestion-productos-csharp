@@ -423,20 +423,9 @@
                            value="@Model.FiltroActual" autocomplete="off">
                 </div>
 
-                <div class="filter-wrapper">
-                    <select name="usuarioId" id="selectUsuario" onchange="this.form.submit()">
-                        <option value="">Todos los creadores</option>
-                        @if (Model.Usuarios != null)
-                        {
-                            @foreach (var usuario in Model.Usuarios)
-                            {
-                                <option value="@usuario.Id" selected="@(Model.UsuarioSeleccionadoId == usuario.Id ? "selected" : null)">
-                                    @usuario.Nombre
-                                </option>
-                            }
-                        }
-                    </select>
-                </div>
+                <a class="btn-add-cyber" asp-page="Importar" style="background: #1565c0;">
+                    <i class="bi bi-file-earmark-arrow-up"></i> Importar CSV
+                </a>
             </form>
 
             <a class="btn-add-cyber" asp-page="Crear">
@@ -455,7 +444,6 @@
             <table class="custom-table" id="tablaProductos">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Código</th>      <!-- ← AÑADIR -->
                         <th>Nombre</th>
                         <th>Creador</th>
@@ -475,7 +463,6 @@
                         @foreach (var producto in Model.productos)
                         {
                             <tr>
-                                <td style="color: #999; font-weight: 700;">#@producto.Id</td>
                                 <td style="font-weight: 600; color: #666; font-size: 0.9rem;">@producto.CodigoProducto</td>  <!-- ← AÑADIR -->
                                 <td style="font-weight: 600; color: #1a1a1a;">@producto.Nombre</td>
                                 <td style="font-weight: 500; color: #1976d2;">
@@ -518,7 +505,7 @@
                     else
                     {
                         <tr>
-                            <td colspan="8">
+                            <td colspan="7">
                                 <div class="empty-state-container">
                                     <div class="empty-icon-circle">
                                         <i class="bi bi-search" style="font-size: 2.5rem;"></i>
