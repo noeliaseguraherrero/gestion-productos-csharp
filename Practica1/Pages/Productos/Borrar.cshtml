@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
 <style>
-    /* 1. CONFIGURACIÓN DEL CUERPO (ESTILO LIGHT) */
     nav, .navbar, footer, header:not(.header-home) {
         display: none !important;
     }
@@ -25,33 +24,32 @@
         color: #333;
     }
 
-    /* 2. CONTENEDOR PRINCIPAL (MISMA POSICIÓN) */
     .main-container {
         display: flex;
         justify-content: center;
         align-items: flex-start;
         width: 100%;
-        padding: 60px 20px;
+        padding: 40px 15px;
         box-sizing: border-box;
     }
 
-    /* 3. TARJETA BLANCA (ANCHO 1100px) */
     .glass-card {
         background: #ffffff;
-        padding: 50px;
-        border-radius: 40px;
+        padding: 40px 35px;
+        border-radius: 30px;
         width: 100%;
         max-width: 1100px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.08);
         border: 1px solid #f0f0f0;
+        box-sizing: border-box;
     }
 
     h1 {
         margin: 0 0 10px 0;
         text-align: center;
         font-weight: 800;
-        letter-spacing: -1.5px;
-        font-size: 2.8rem;
+        letter-spacing: -1px;
+        font-size: clamp(1.6rem, 4vw, 2.8rem);
         text-transform: uppercase;
         color: #1a1a1a;
     }
@@ -60,24 +58,25 @@
         text-align: center;
         color: #d32f2f;
         font-weight: 600;
-        margin-bottom: 40px;
-        font-size: 1.1rem;
+        margin-bottom: 35px;
+        font-size: 1rem;
+        padding: 0 10px;
     }
 
-    /* 4. ÁREA DE CONFIRMACIÓN */
     .info-content {
         max-width: 600px;
         margin: 0 auto;
-        background-color: #fff5f5; /* Un tono rojizo muy suave para advertencia */
-        padding: 40px;
-        border-radius: 25px;
+        background-color: #fff5f5;
+        padding: 30px;
+        border-radius: 20px;
         border: 1px solid #ffcdd2;
+        box-sizing: border-box;
     }
 
     .info-item {
-        margin-bottom: 20px;
-        border-bottom: 1px solid rgba(211, 47, 47, 0.1);
-        padding-bottom: 15px;
+        margin-bottom: 18px;
+        border-bottom: 1px solid rgba(211,47,47,0.1);
+        padding-bottom: 14px;
     }
 
         .info-item:last-child {
@@ -87,7 +86,7 @@
 
     .info-label {
         display: block;
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         color: darkred;
         font-weight: 800;
         text-transform: uppercase;
@@ -96,25 +95,26 @@
     }
 
     .info-value {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 600;
         color: #1a1a1a;
     }
 
-    /* 5. BOTONES */
     .btn-container {
         max-width: 600px;
-        margin: 40px auto 0 auto;
+        margin: 30px auto 0 auto;
         display: flex;
-        gap: 20px;
+        gap: 12px;
+        flex-wrap: wrap;
     }
 
     .btn-cyber {
         flex: 2;
-        padding: 18px;
-        border-radius: 15px;
+        min-width: 140px;
+        padding: 16px;
+        border-radius: 13px;
         border: none;
-        background: #d32f2f; /* Rojo para borrar */
+        background: #d32f2f;
         color: white;
         font-weight: 700;
         text-transform: uppercase;
@@ -124,20 +124,23 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 8px;
         text-decoration: none;
-        box-shadow: 0 8px 20px rgba(211, 47, 47, 0.2);
+        box-shadow: 0 8px 20px rgba(211,47,47,0.2);
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
     }
 
         .btn-cyber:hover {
             background: #b71c1c;
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 12px 25px rgba(211,47,47,0.3);
         }
 
     .btn-back {
         flex: 1;
-        background: #ffffff;
+        min-width: 100px;
+        background: #fff;
         color: #666;
         border: 1px solid #ddd;
         box-shadow: none;
@@ -148,6 +151,33 @@
             color: #333;
             border-color: #ccc;
         }
+
+    @@media (max-width: 600px) {
+        .glass-card
+
+    {
+        padding: 25px 15px;
+        border-radius: 20px;
+    }
+
+    .main-container {
+        padding: 20px 10px;
+    }
+
+    .btn-container {
+        flex-direction: column;
+    }
+
+    .btn-cyber, .btn-back {
+        flex: unset;
+        width: 100%;
+    }
+
+    .info-content {
+        padding: 20px 15px;
+    }
+
+    }
 </style>
 
 <div class="main-container">
@@ -160,12 +190,10 @@
                 <span class="info-label">Nombre del Producto</span>
                 <span class="info-value">@Model.Producto.Nombre</span>
             </div>
-
             <div class="info-item">
                 <span class="info-label">Precio</span>
                 <span class="info-value">@Model.Producto.Precio.ToString("C")</span>
             </div>
-
             <div class="info-item">
                 <span class="info-label">Stock que se perderá</span>
                 <span class="info-value">@Model.Producto.Stock unidades</span>

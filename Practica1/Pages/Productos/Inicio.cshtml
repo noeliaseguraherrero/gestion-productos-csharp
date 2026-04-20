@@ -10,7 +10,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
-    /* 1. RESET Y FONDO */
     nav, .navbar, footer, header:not(.header-home) {
         display: none !important;
     }
@@ -29,35 +28,35 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 60px 20px;
+        padding: 40px 15px;
     }
 
-    /* 2. TARJETA BLANCA */
     .glass-card {
         background: #ffffff;
-        padding: 50px;
-        border-radius: 40px;
+        padding: 35px 25px;
+        border-radius: 30px;
         width: 100%;
         max-width: 1200px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.08);
         border: 1px solid #f0f0f0;
         position: relative;
+        box-sizing: border-box;
     }
 
     h1 {
         margin: 0 0 10px 0;
         text-align: center;
         font-weight: 800;
-        letter-spacing: -1.5px;
-        font-size: 2.8rem;
+        letter-spacing: -1px;
+        font-size: clamp(1.6rem, 4vw, 2.8rem);
         text-transform: uppercase;
         color: #1a1a1a;
     }
 
     .welcome-user {
         text-align: center;
-        margin-bottom: 40px;
-        font-size: 1.1rem;
+        margin-bottom: 30px;
+        font-size: 1rem;
         color: #666;
         font-weight: 400;
     }
@@ -68,75 +67,84 @@
             border-bottom: 2px solid #e3f2fd;
         }
 
-    /* 3. BOTÓN CERRAR SESIÓN */
+    /* LOGOUT */
     .logout-container {
         position: absolute;
-        top: 30px;
-        right: 30px;
+        top: 20px;
+        right: 20px;
     }
 
     .btn-logout {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 20px;
+        gap: 6px;
+        padding: 8px 14px;
         background-color: #fff5f5;
         color: #d32f2f;
         border: 1px solid #ff00001a;
         text-decoration: none;
         font-weight: 700;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
-        border-radius: 12px;
+        border-radius: 10px;
         transition: all 0.3s ease;
+        white-space: nowrap;
     }
 
         .btn-logout:hover {
             background-color: #d32f2f;
-            color: #ffffff;
+            color: #fff;
             transform: translateY(-2px);
         }
 
-    /* 4. BUSCADOR, FILTRO Y BOTÓN AGREGAR */
+        .btn-logout .logout-text {
+            display: inline;
+        }
+
+    /* ACTIONS BAR */
     .actions-bar {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 40px;
-        gap: 15px;
+        margin-bottom: 25px;
+        gap: 12px;
     }
 
     .filters-group {
         display: flex;
-        gap: 15px;
+        flex-wrap: wrap;
+        gap: 12px;
         flex-grow: 1;
-        max-width: 800px;
+        min-width: 0;
     }
 
     .search-wrapper {
         position: relative;
-        flex-grow: 2;
+        flex: 1;
+        min-width: 180px;
     }
 
         .search-wrapper i {
             position: absolute;
-            left: 18px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: #aaa;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
     #inputBusqueda {
         width: 100%;
-        padding: 15px 15px 15px 50px;
-        border-radius: 18px;
+        padding: 13px 13px 13px 42px;
+        border-radius: 15px;
         border: 1px solid #eee;
         background: #f9f9f9;
         font-family: 'Inter', sans-serif;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         outline: none;
         transition: all 0.3s ease;
+        box-sizing: border-box;
     }
 
         #inputBusqueda:focus {
@@ -145,72 +153,124 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
 
-    /* Estilo para el Selector de Creador */
-    .filter-wrapper {
-        flex-grow: 1;
-        min-width: 200px;
-    }
-
-    #selectUsuario {
-        width: 100%;
-        padding: 15px;
-        border-radius: 18px;
-        border: 1px solid #eee;
-        background: #f9f9f9;
-        font-family: 'Inter', sans-serif;
-        font-size: 0.95rem;
-        outline: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23aaa' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 15px center;
-    }
-
-        #selectUsuario:focus {
-            border-color: #1976d2;
-            background-color: #fff;
-        }
-
     .btn-add-cyber {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 16px 32px;
-        border-radius: 15px;
+        gap: 8px;
+        padding: 13px 20px;
+        border-radius: 13px;
         background: #1b5e20;
-        color: #ffffff;
+        color: #fff;
         font-weight: 700;
         text-transform: uppercase;
         text-decoration: none;
         transition: all 0.3s ease;
         box-shadow: 0 8px 20px rgba(27,94,32,0.15);
         white-space: nowrap;
+        font-size: 0.85rem;
     }
 
         .btn-add-cyber:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             background: #2e7d32;
             color: white;
         }
 
-    /* 5. PAGINACIÓN */
+    /* TABLA */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+    }
+
+        .custom-table th {
+            text-align: left;
+            padding: 15px 12px;
+            color: darkred;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            border-bottom: 2px solid #f0f0f0;
+            white-space: nowrap;
+        }
+
+        .custom-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f8f8f8;
+            font-size: 0.9rem;
+        }
+
+    .btn-action {
+        padding: 8px 11px;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.2s ease;
+        margin-right: 5px;
+        margin-bottom: 4px;
+        border: 1px solid #eee;
+        white-space: nowrap;
+    }
+
+    .btn-edit {
+        background: #fff;
+        color: #1b5e20;
+        border-color: #c8e6c9;
+    }
+
+        .btn-edit:hover {
+            background: #1b5e20;
+            color: white;
+        }
+
+    .btn-delete {
+        background: #fff;
+        color: #d32f2f;
+        border-color: #ffcdd2;
+    }
+
+        .btn-delete:hover {
+            background: #d32f2f;
+            color: white;
+        }
+
+    .btn-detail {
+        background: #fff;
+        color: #1976d2;
+        border-color: #bbdefb;
+    }
+
+        .btn-detail:hover {
+            background: #1976d2;
+            color: white;
+        }
+
+    /* PAGINACIÓN */
     .pagination-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
-        margin-top: 30px;
+        gap: 8px;
+        margin-top: 25px;
+        flex-wrap: wrap;
     }
 
     .btn-page {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 12px;
+        border-radius: 10px;
         background: white;
         border: 1px solid #eee;
         color: #333;
@@ -238,47 +298,71 @@
         }
 
     .page-info {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: #777;
-        margin: 0 10px;
+        margin: 0 5px;
     }
 
-    /* 6. RESUMEN DEBAJO */
+    /* EMPTY STATE */
+    .empty-state-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 0;
+        gap: 12px;
+    }
+
+    .empty-icon-circle {
+        background: #f8f9fa;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #adb5bd;
+        margin-bottom: 8px;
+    }
+
+    /* SUMMARY */
     .summary-outer-container {
         width: 100%;
         max-width: 1200px;
-        margin-top: 30px;
+        margin-top: 25px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+        box-sizing: border-box;
     }
 
     .summary-card {
-        background: #ffffff;
-        padding: 25px;
-        border-radius: 25px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 20px;
         border: 1px solid #f0f0f0;
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 15px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
     }
 
         .summary-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.06);
             border-color: #e0e0e0;
         }
 
         .summary-card i {
-            font-size: 1.8rem;
-            width: 55px;
-            height: 55px;
+            font-size: 1.6rem;
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 15px;
+            border-radius: 13px;
         }
 
     .bg-blue {
@@ -298,7 +382,7 @@
 
     .summary-info h4 {
         margin: 0;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: #999;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -306,98 +390,118 @@
 
     .summary-info p {
         margin: 0;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         font-weight: 800;
         color: #333;
     }
 
-    /* 7. TABLA */
-    .custom-table {
-        width: 100%;
-        border-collapse: collapse;
+    /* RESPONSIVE */
+    @@media (max-width: 768px) {
+        .glass-card
+
+    {
+        padding: 25px 15px;
+        border-radius: 20px;
     }
 
-        .custom-table th {
-            text-align: left;
-            padding: 20px 15px;
-            color: darkred;
-            font-weight: 800;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            border-bottom: 2px solid #f0f0f0;
-        }
+    .logout-container {
+        position: static;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: flex-end;
+    }
 
-        .custom-table td {
-            padding: 20px 15px;
-            border-bottom: 1px solid #f8f8f8;
-        }
+    .actions-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filters-group {
+        flex-direction: column;
+    }
+
+    .btn-add-cyber {
+        justify-content: center;
+    }
+
+    .search-wrapper {
+        min-width: unset;
+    }
+
+    .btn-action .btn-text {
+        display: none;
+    }
 
     .btn-action {
-        padding: 10px 14px;
-        border-radius: 10px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.2s ease;
-        margin-right: 8px;
-        border: 1px solid #eee;
+        padding: 8px 10px;
     }
 
-    .btn-edit {
-        background: #ffffff;
-        color: #1b5e20;
-        border-color: #c8e6c9;
+    .custom-table th, .custom-table td {
+        padding: 12px 8px;
     }
 
-        .btn-edit:hover {
-            background: #1b5e20;
-            color: white;
-        }
-
-    .btn-delete {
-        background: #ffffff;
-        color: #d32f2f;
-        border-color: #ffcdd2;
+    .logout-text {
+        display: none !important;
     }
 
-        .btn-delete:hover {
-            background: #d32f2f;
-            color: white;
-        }
-
-    .btn-detail {
-        background: #ffffff;
-        color: #1976d2;
-        border-color: #bbdefb;
     }
 
-        .btn-detail:hover {
-            background: #1976d2;
-            color: white;
-        }
+    @@media (max-width: 480px) {
+        .main-container
 
-    .empty-state-container {
+    {
+        padding: 20px 10px;
+    }
+
+    .glass-card {
+        padding: 20px 12px;
+    }
+
+    .summary-outer-container {
+        grid-template-columns: 1fr;
+    }
+
+    }
+
+    /* ... dentro de tu etiqueta <style> ... */
+
+    /* ESTO SOLUCIONA EL SOLAPAMIENTO (Rango iPad y Tablets) */
+@@media (max-width: 1024px) {
+        .logout-container
+
+    {
+        position: relative; /* Cambia de absolute a relative para que no flote sobre el H1 */
+        top: auto;
+        right: auto;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 60px 0;
-        gap: 15px;
-    }
-
-    .empty-icon-circle {
-        background: #f8f9fa;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #adb5bd;
+        justify-content: flex-end; /* Lo mantiene a la derecha pero dentro del flujo */
         margin-bottom: 10px;
+    }
+
+    h1 {
+        margin-top: 10px; /* Espacio extra al quitar el botón de arriba */
+        padding: 0 10px;
+        line-height: 1.2;
+    }
+
+    }
+
+    /* Ajustes adicionales para móviles (Ya lo tenías, asegúrate que se mantenga así) */
+@@media (max-width: 768px) {
+        h1
+
+    {
+        font-size: 1.8rem;
+    }
+
+    .logout-container {
+        justify-content: center; /* En móviles queda mejor centrado */
+    }
+
+    .logout-text {
+        display: none !important; /* Oculta el texto para que solo quede el icono si es muy pequeño */
+    }
+
     }
 </style>
 
@@ -405,7 +509,8 @@
     <div class="glass-card">
         <div class="logout-container">
             <a asp-page="/Index" asp-page-handler="Logout" class="btn-logout">
-                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                <i class="bi bi-box-arrow-right"></i>
+                <span class="logout-text">Cerrar Sesión</span>
             </a>
         </div>
 
@@ -422,29 +527,32 @@
                            placeholder="Buscar producto..."
                            value="@Model.FiltroActual" autocomplete="off">
                 </div>
-
-                <a class="btn-add-cyber" asp-page="Importar" style="background: #1565c0;">
-                    <i class="bi bi-file-earmark-arrow-up"></i> Importar CSV
-                </a>
             </form>
 
+            <a class="btn-add-cyber" asp-page="Importar" style="background: #1565c0;">
+                <i class="bi bi-file-earmark-arrow-up"></i>
+                <span>Importar CSV</span>
+            </a>
             <a class="btn-add-cyber" asp-page="Crear">
-                <i class="bi bi-plus-circle-dotted"></i> Agregar Nuevo Producto
+                <i class="bi bi-plus-circle-dotted"></i>
+                <span>Nuevo Producto</span>
             </a>
         </div>
 
         @if (User.IsInRole("Admin"))
         {
-            <a asp-page="/Usuarios/Index" class="btn-action btn-detail" style="border-color: #1976d2; color: #1976d2;">
-                <i class="bi bi-people"></i> Gestionar Usuarios
-            </a>
+            <div style="margin-bottom: 20px;">
+                <a asp-page="/Usuarios/Index" class="btn-action btn-detail" style="border-color: #1976d2; color: #1976d2;">
+                    <i class="bi bi-people"></i> <span class="btn-text">Gestionar Usuarios</span>
+                </a>
+            </div>
         }
 
-        <div style="overflow-x: auto;">
+        <div class="table-wrapper">
             <table class="custom-table" id="tablaProductos">
                 <thead>
                     <tr>
-                        <th>Código</th>      <!-- ← AÑADIR -->
+                        <th>Código</th>
                         <th>Nombre</th>
                         <th>Creador</th>
                         <th>Precio</th>
@@ -463,40 +571,37 @@
                         @foreach (var producto in Model.productos)
                         {
                             <tr>
-                                <td style="font-weight: 600; color: #666; font-size: 0.9rem;">@producto.CodigoProducto</td>  <!-- ← AÑADIR -->
-                                <td style="font-weight: 600; color: #1a1a1a;">@producto.Nombre</td>
-                                <td style="font-weight: 500; color: #1976d2;">
+                                <td style="font-weight:600;color:#666;font-size:0.85rem;">@producto.CodigoProducto</td>
+                                <td style="font-weight:600;color:#1a1a1a;">@producto.Nombre</td>
+                                <td style="font-weight:500;color:#1976d2;">
                                     <i class="bi bi-person"></i> @(producto.Creador?.Nombre?.Trim() ?? "Admin")
                                 </td>
-                                <td style="font-weight: 500;">$@producto.Precio.ToString("N2")</td>
+                                <td style="font-weight:500;">$@producto.Precio.ToString("N2")</td>
                                 <td>
                                     @if (producto.Stock < 10)
                                     {
-                                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px; background-color: #fee2e2; color: #991b1b; font-weight: 800; font-size: 0.9rem; border: 1px solid #fecaca;">
+                                        <span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;background:#fee2e2;color:#991b1b;font-weight:800;font-size:0.85rem;border:1px solid #fecaca;">
                                             <i class="bi bi-exclamation-circle-fill"></i> @producto.Stock
                                         </span>
                                     }
                                     else
                                     {
-                                        <span style="font-weight: 600; color: #1b5e20; padding-left: 12px;">
-                                            @producto.Stock
-                                        </span>
+                                        <span style="font-weight:600;color:#1b5e20;">@producto.Stock</span>
                                     }
                                 </td>
-                                <td style="font-size: 0.85rem; color: #666;">@producto.FechaCreacion.ToShortDateString()</td>
-                                <td>
-                                    @* Lógica de Permisos: Es el dueño O es Administrador *@
+                                <td style="font-size:0.82rem;color:#666;white-space:nowrap;">@producto.FechaCreacion.ToShortDateString()</td>
+                                <td style="white-space:nowrap;">
                                     @if (currentUserId == producto.UsuarioId.ToString() || User.IsInRole("Admin"))
                                     {
                                         <a class="btn-action btn-edit" asp-page="Editar" asp-route-id="@producto.Id">
-                                            <i class="bi bi-pencil-square"></i> Editar
+                                            <i class="bi bi-pencil-square"></i><span class="btn-text"> Editar</span>
                                         </a>
                                         <a class="btn-action btn-delete" asp-page="Borrar" asp-route-id="@producto.Id">
-                                            <i class="bi bi-trash3"></i> Borrar
+                                            <i class="bi bi-trash3"></i><span class="btn-text"> Borrar</span>
                                         </a>
                                     }
                                     <a class="btn-action btn-detail" asp-page="Detalle" asp-route-id="@producto.Id">
-                                        <i class="bi bi-eye"></i> Detalle
+                                        <i class="bi bi-eye"></i><span class="btn-text"> Detalle</span>
                                     </a>
                                 </td>
                             </tr>
@@ -508,13 +613,13 @@
                             <td colspan="7">
                                 <div class="empty-state-container">
                                     <div class="empty-icon-circle">
-                                        <i class="bi bi-search" style="font-size: 2.5rem;"></i>
+                                        <i class="bi bi-search" style="font-size:2rem;"></i>
                                     </div>
-                                    <div style="text-align: center;">
-                                        <h3 style="margin: 0; font-weight: 700; color: #343a40;">No se encontraron productos</h3>
-                                        <p style="margin: 5px 0 0 0; color: #6c757d;">No hay coincidencias en la base de datos.</p>
+                                    <div style="text-align:center;">
+                                        <h3 style="margin:0;font-weight:700;color:#343a40;">No se encontraron productos</h3>
+                                        <p style="margin:5px 0 0 0;color:#6c757d;">No hay coincidencias en la base de datos.</p>
                                     </div>
-                                    <a asp-page="./Inicio" style="color: #1976d2; font-weight: 600; text-decoration: underline;">
+                                    <a asp-page="./Inicio" style="color:#1976d2;font-weight:600;text-decoration:underline;">
                                         Limpiar filtros y ver todos
                                     </a>
                                 </div>
@@ -538,6 +643,7 @@
                 }
                 else
                 {
+
                     <span class="btn-page disabled"><i class="bi bi-chevron-left"></i></span>
                 }
 
@@ -553,6 +659,7 @@
                 }
                 else
                 {
+
                     <span class="btn-page disabled"><i class="bi bi-chevron-right"></i></span>
                 }
             </div>
@@ -562,68 +669,43 @@
     <div class="summary-outer-container">
         <div class="summary-card">
             <i class="bi bi-boxes bg-blue"></i>
-            <div class="summary-info">
-                <h4>Total Productos</h4>
-                <p>@Model.TotalProductos</p>
-            </div>
+            <div class="summary-info"><h4>Total Productos</h4><p>@Model.TotalProductos</p></div>
         </div>
-
         <div class="summary-card">
             <i class="bi bi-currency-dollar bg-green"></i>
-            <div class="summary-info">
-                <h4>Valor Inventario</h4>
-                <p>@Model.ValorInventario.ToString("N2")$</p>
-            </div>
+            <div class="summary-info"><h4>Valor Inventario</h4><p>@Model.ValorInventario.ToString("N2")$</p></div>
         </div>
-
         <div class="summary-card">
             <i class="bi bi-exclamation-triangle bg-orange"></i>
-            <div class="summary-info">
-                <h4>Stock Crítico (< 10)</h4>
-                <p>@Model.StockBajoCount</p>
-            </div>
+            <div class="summary-info"><h4>Stock Crítico (< 10)</h4><p>@Model.StockBajoCount</p></div>
         </div>
     </div>
 </div>
 
 <script>
-    // 🔍 LÓGICA DE FILTRADO UNIFICADA
     let timer;
     const inputBusqueda = document.getElementById('inputBusqueda');
     const formFiltros = document.getElementById('formFiltros');
 
-    // Búsqueda con retardo al escribir
-    inputBusqueda.addEventListener('input', function() {
+    inputBusqueda.addEventListener('input', function () {
         clearTimeout(timer);
-        timer = setTimeout(() => {
-            formFiltros.submit();
-        }, 500);
+        timer = setTimeout(() => { formFiltros.submit(); }, 500);
     });
 
-    // Mantener el foco al final del texto después de recargar
     if (inputBusqueda.value.length > 0) {
         inputBusqueda.focus();
         inputBusqueda.setSelectionRange(inputBusqueda.value.length, inputBusqueda.value.length);
     }
 
-    // 🔔 FEEDBACK VISUAL (TOASTS)
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var mensaje = '@TempData["Mensaje"]';
         var tipo = '@TempData["Tipo"]';
-
         if (mensaje && mensaje !== '') {
             const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
+                toast: true, position: 'top-end',
+                showConfirmButton: false, timer: 3000, timerProgressBar: true
             });
-
-            Toast.fire({
-                icon: tipo || 'success',
-                title: mensaje
-            });
+            Toast.fire({ icon: tipo || 'success', title: mensaje });
         }
     });
 </script>
