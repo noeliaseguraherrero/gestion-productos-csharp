@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+ï»¿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Practica1.Datos;
@@ -56,7 +56,7 @@ namespace Practica1.Pages.Productos
             if (codigoExiste)
             {
                 ModelState.AddModelError("Producto.CodigoProducto",
-                    "Ya existe un producto con ese código. Usa uno diferente.");
+                    "Ya existe un producto con ese cÃ³digo. Usa uno diferente.");
                 return Page();
             }
 
@@ -73,6 +73,7 @@ namespace Practica1.Pages.Productos
                 await _context.SaveChangesAsync();
 
                 // HISTORIAL
+                // Cambia la secciÃ³n del historial a esto:
                 var historial = new HistorialAccion
                 {
                     Accion = "Editar",
@@ -80,8 +81,9 @@ namespace Practica1.Pages.Productos
                     CodigoProducto = Producto.CodigoProducto,
                     UsuarioId = int.Parse(userId),
                     Fecha = DateTime.Now,
-                    Detalles = $"Precio: {precioAnterior}€ ? {Producto.Precio}€ | " +
-                                     $"Stock: {stockAnterior} ? {Producto.Stock}"
+                    // Quitamos el sÃ­mbolo â‚¬ y lo cambiamos por la palabra o nada
+                    Detalles = $"Precio: {precioAnterior} -> {Producto.Precio} | " +
+                               $"Stock: {stockAnterior} -> {Producto.Stock}"
                 };
                 _context.HistorialAcciones.Add(historial);
                 await _context.SaveChangesAsync();

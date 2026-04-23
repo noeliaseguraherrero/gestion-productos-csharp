@@ -427,7 +427,10 @@
                                 <td style="font-size:0.82rem;color:#666;white-space:nowrap;">
                                     @item.Fecha.ToString("dd/MM/yyyy HH:mm")
                                 </td>
-                                <td style="font-size:0.82rem;color:#777;">@item.Detalles</td>
+                                <td style="font-size:0.82rem;color:#777;">
+                                    @item.Detalles.Replace("?", "→").Replace("  ", " ")
+                                </td>
+
                             </tr>
                         }
                     }
