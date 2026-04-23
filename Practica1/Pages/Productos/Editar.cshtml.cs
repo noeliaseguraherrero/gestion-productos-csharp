@@ -22,16 +22,13 @@ namespace Practica1.Pages.Productos
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Producto = await _context.Producto.FirstOrDefaultAsync(p => p.Id == id);
+
             if (Producto == null)
-            {
                 return NotFound();
-            }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (Producto.UsuarioId.ToString() != userId)
-            {
                 return Forbid();
-            }
 
             return Page();
         }
@@ -43,15 +40,15 @@ namespace Practica1.Pages.Productos
             if (!ModelState.IsValid)
                 return Page();
 
-            var productoDb = await _context.Producto.AsNoTracking().FirstOrDefaultAsync(p => p.Id == Producto.Id);
+            var productoDb = await _context.Producto
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == Producto.Id);
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (productoDb == null || productoDb.UsuarioId.ToString() != userId)
-            {
-                return Forbid();
-            }
 
-            // ? NUEVO: Comprobar duplicado excluyendo el propio producto
+            if (productoDb == null || productoDb.UsuarioId.ToString() != userId)
+                return Forbid();
+
             bool codigoExiste = await _context.Producto
                 .AnyAsync(p => p.CodigoProducto == Producto.CodigoProducto
                             && p.Id != Producto.Id);
@@ -62,31 +59,42 @@ namespace Practica1.Pages.Productos
                     "Ya existe un producto con ese código. Usa uno diferente.");
                 return Page();
             }
-            // ? FIN NUEVO
 
-            // Mantenemos los datos originales de la DB que no están en el formulario
+            // Guardar valores anteriores para el historial
+            var precioAnterior = productoDb.Precio;
+            var stockAnterior = productoDb.Stock;
+
             Producto.UsuarioId = productoDb.UsuarioId;
             Producto.FechaCreacion = productoDb.FechaCreacion;
-
             _context.Attach(Producto).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
+
+                // HISTORIAL
+                var historial = new HistorialAccion
+                {
+                    Accion = "Editar",
+                    NombreProducto = Producto.Nombre,
+                    CodigoProducto = Producto.CodigoProducto,
+                    UsuarioId = int.Parse(userId),
+                    Fecha = DateTime.Now,
+                    Detalles = $"Precio: {precioAnterior}€ ? {Producto.Precio}€ | " +
+                                     $"Stock: {stockAnterior} ? {Producto.Stock}"
+                };
+                _context.HistorialAcciones.Add(historial);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!ProductoExiste(Producto.Id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
-            TempData["Mensaje"] = "Cambios guardados correctamente";
+            TempData["Mensaje"] = "Cambios guardados correctamente.";
             TempData["Tipo"] = "info";
             return RedirectToPage("./Inicio");
         }

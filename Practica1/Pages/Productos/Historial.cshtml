@@ -1,0 +1,524 @@
+﻿@page
+@model Practica1.Pages.Productos.HistorialModel
+@{
+    ViewData["Title"] = "Historial de Acciones - BecariosBD";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+    nav, .navbar, footer, header:not(.header-home) {
+        display: none !important;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100vh;
+        font-family: 'Inter', sans-serif;
+        background-color: #fcfcfc;
+        color: #333;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 15px;
+    }
+
+    .glass-card {
+        background: #ffffff;
+        padding: 35px 25px;
+        border-radius: 30px;
+        width: 100%;
+        max-width: 1200px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+        border: 1px solid #f0f0f0;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        margin: 0 0 10px 0;
+        text-align: center;
+        font-weight: 800;
+        letter-spacing: -1px;
+        font-size: clamp(1.6rem, 4vw, 2.8rem);
+        text-transform: uppercase;
+        color: #1a1a1a;
+    }
+
+    .subtitulo {
+        text-align: center;
+        color: #999;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+    }
+
+    .btn-back {
+        text-decoration: none;
+        color: #666;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s ease;
+        padding: 5px 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+        .btn-back:hover {
+            color: #1976d2;
+            background-color: #e3f2fd;
+            transform: translateX(-5px);
+        }
+
+    /* FILTROS */
+    .filters-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 25px;
+        align-items: center;
+    }
+
+    .filter-select, .filter-input {
+        padding: 11px 15px;
+        border-radius: 12px;
+        border: 1px solid #eee;
+        background: #f9f9f9;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.88rem;
+        outline: none;
+        transition: all 0.3s ease;
+        color: #333;
+    }
+
+        .filter-select:focus, .filter-input:focus {
+            background: #fff;
+            border-color: #1976d2;
+            box-shadow: 0 5px 15px rgba(25,118,210,0.1);
+        }
+
+    .btn-filter {
+        padding: 11px 20px;
+        border-radius: 12px;
+        border: none;
+        background: #1976d2;
+        color: white;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .btn-filter:hover {
+            background: #1565c0;
+            transform: translateY(-2px);
+        }
+
+    .btn-clear {
+        padding: 11px 20px;
+        border-radius: 12px;
+        border: 1px solid #eee;
+        background: white;
+        color: #666;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-clear:hover {
+            background: #fee2e2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+
+    /* TABLA */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 650px;
+    }
+
+        .custom-table th {
+            text-align: left;
+            padding: 15px 12px;
+            color: darkred;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            border-bottom: 2px solid #f0f0f0;
+            white-space: nowrap;
+        }
+
+        .custom-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f8f8f8;
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+
+    /* BADGES DE ACCION */
+    .badge-accion {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-weight: 800;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+    }
+
+    .badge-crear {
+        background: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+    }
+
+    .badge-editar {
+        background: #e3f2fd;
+        color: #1565c0;
+        border: 1px solid #bbdefb;
+    }
+
+    .badge-eliminar {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+    }
+
+    /* PAGINACION */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 25px;
+        flex-wrap: wrap;
+    }
+
+    .btn-page {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: white;
+        border: 1px solid #eee;
+        color: #333;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+        .btn-page:hover:not(.disabled) {
+            background: #1976d2;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-page.active {
+            background: #1976d2;
+            color: white;
+            border-color: #1976d2;
+        }
+
+        .btn-page.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+
+    .page-info {
+        font-size: 0.85rem;
+        color: #777;
+        margin: 0 5px;
+    }
+
+    /* EMPTY STATE */
+    .empty-state-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 0;
+        gap: 12px;
+    }
+
+    .empty-icon-circle {
+        background: #f8f9fa;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #adb5bd;
+        margin-bottom: 8px;
+    }
+
+    /* SUMMARY CARDS */
+    .summary-outer-container {
+        width: 100%;
+        max-width: 1200px;
+        margin-top: 25px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        box-sizing: border-box;
+    }
+
+    .summary-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 20px;
+        border: 1px solid #f0f0f0;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        transition: all 0.3s ease;
+    }
+
+        .summary-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+        }
+
+        .summary-card i {
+            font-size: 1.6rem;
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+        }
+
+    .bg-blue {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .bg-green {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .bg-red {
+        background: #fee2e2;
+        color: #d32f2f;
+    }
+
+    .summary-info h4 {
+        margin: 0;
+        font-size: 0.7rem;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .summary-info p {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #333;
+    }
+</style>
+
+<div class="main-container">
+    <div class="glass-card">
+
+        <a asp-page="./Inicio" class="btn-back">
+            <i class="bi bi-arrow-left"></i> Volver al Panel
+        </a>
+
+        <h1>Historial de Acciones</h1>
+        <p class="subtitulo">Registro de actividad sobre productos</p>
+
+        <!-- FILTROS -->
+        <form method="get" class="filters-bar">
+            <select name="accion" class="filter-select">
+                <option value="">Todas las acciones</option>
+                <option value="Crear" selected="@(Model.FiltroAccion == "Crear")">Crear</option>
+                <option value="Editar" selected="@(Model.FiltroAccion == "Editar")">Editar</option>
+                <option value="Eliminar" selected="@(Model.FiltroAccion == "Eliminar")">Eliminar</option>
+            </select>
+
+            <select name="usuarioId" class="filter-select">
+                <option value="">Todos los usuarios</option>
+                @foreach (var usuario in Model.Usuarios)
+                {
+                    <option value="@usuario.Id"
+                            selected="@(Model.FiltroUsuarioId == usuario.Id)">
+                        @usuario.Nombre
+                    </option>
+                }
+            </select>
+
+            <input type="date" name="fecha" class="filter-input"
+                   value="@Model.FiltroFecha" />
+
+            <button type="submit" class="btn-filter">
+                <i class="bi bi-funnel"></i> Filtrar
+            </button>
+
+            <a asp-page="./Historial" class="btn-clear">
+                <i class="bi bi-x-circle"></i> Limpiar
+            </a>
+        </form>
+
+        <!-- TABLA -->
+        <div class="table-wrapper">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Accion</th>
+                        <th>Producto</th>
+                        <th>Codigo</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Detalles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Historial.Any())
+                    {
+                        @foreach (var item in Model.Historial)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="badge-accion @(item.Accion == "Crear" ? "badge-crear" : item.Accion == "Editar" ? "badge-editar" : "badge-eliminar")">
+                                        <i class="bi @(item.Accion == "Crear" ? "bi-plus-circle" : item.Accion == "Editar" ? "bi-pencil-square" : "bi-trash3")"></i>
+                                        @item.Accion
+                                    </span>
+                                </td>
+                                <td style="font-weight:600;color:#1a1a1a;">@item.NombreProducto</td>
+                                <td style="font-weight:600;color:#666;font-size:0.85rem;">@item.CodigoProducto</td>
+                                <td style="color:#1976d2;font-weight:600;">
+                                    <i class="bi bi-person"></i> @item.Usuario?.Nombre
+                                </td>
+                                <td style="font-size:0.82rem;color:#666;white-space:nowrap;">
+                                    @item.Fecha.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+                                <td style="font-size:0.82rem;color:#777;">@item.Detalles</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">
+                                <div class="empty-state-container">
+                                    <div class="empty-icon-circle">
+                                        <i class="bi bi-clock-history" style="font-size:2rem;"></i>
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <h3 style="margin:0;font-weight:700;color:#343a40;">Sin registros</h3>
+                                        <p style="margin:5px 0 0 0;color:#6c757d;">No hay acciones que coincidan con los filtros.</p>
+                                    </div>
+                                    <a asp-page="./Historial" style="color:#1976d2;font-weight:600;text-decoration:underline;">
+                                        Limpiar filtros
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- PAGINACION -->
+        @if (Model.TotalPaginas > 1)
+        {
+            <div class="pagination-container">
+                @if (Model.PaginaActual > 1)
+                {
+                    <a asp-page="./Historial"
+                       asp-route-pagina="@(Model.PaginaActual - 1)"
+                       asp-route-accion="@Model.FiltroAccion"
+                       asp-route-usuarioId="@Model.FiltroUsuarioId"
+                       asp-route-fecha="@Model.FiltroFecha"
+                       class="btn-page">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                }
+                else
+                {
+                    <span class="btn-page disabled"><i class="bi bi-chevron-left"></i></span>
+                }
+
+                <span class="page-info">
+                    Pagina <strong>@Model.PaginaActual</strong> de @Model.TotalPaginas
+                </span>
+
+                @if (Model.PaginaActual < Model.TotalPaginas)
+                {
+                    <a asp-page="./Historial"
+                       asp-route-pagina="@(Model.PaginaActual + 1)"
+                       asp-route-accion="@Model.FiltroAccion"
+                       asp-route-usuarioId="@Model.FiltroUsuarioId"
+                       asp-route-fecha="@Model.FiltroFecha"
+                       class="btn-page">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                }
+                else
+                {
+                    <span class="btn-page disabled"><i class="bi bi-chevron-right"></i></span>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- SUMMARY CARDS -->
+    <div class="summary-outer-container">
+        <div class="summary-card">
+            <i class="bi bi-plus-circle bg-green"></i>
+            <div class="summary-info">
+                <h4>Creaciones</h4>
+                <p>@Model.Historial.Count(h => h.Accion == "Crear")</p>
+            </div>
+        </div>
+        <div class="summary-card">
+            <i class="bi bi-pencil-square bg-blue"></i>
+            <div class="summary-info">
+                <h4>Ediciones</h4>
+                <p>@Model.Historial.Count(h => h.Accion == "Editar")</p>
+            </div>
+        </div>
+        <div class="summary-card">
+            <i class="bi bi-trash3 bg-red"></i>
+            <div class="summary-info">
+                <h4>Eliminaciones</h4>
+                <p>@Model.Historial.Count(h => h.Accion == "Eliminar")</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,7 +10,7 @@ namespace Practica1.Datos
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Producto> Producto { get; set; } // <--- Esto permite el _context.Producto
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<HistorialAccion> HistorialAcciones { get; set; } // <-- AÑADIR
     }
 }
-

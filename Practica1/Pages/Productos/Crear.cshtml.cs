@@ -10,6 +10,7 @@ namespace Practica1.Pages.Productos
     public class CrearModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+
         public CrearModel(ApplicationDbContext context)
         {
             _context = context;
@@ -30,7 +31,6 @@ namespace Practica1.Pages.Productos
             if (!ModelState.IsValid)
                 return Page();
 
-            // Comprobar si ya existe el código
             bool codigoExiste = await _context.Producto
                 .AnyAsync(p => p.CodigoProducto == Producto.CodigoProducto);
 
@@ -49,7 +49,20 @@ namespace Practica1.Pages.Productos
                 _context.Producto.Add(Producto);
                 await _context.SaveChangesAsync();
 
-                TempData["Mensaje"] = "¡Producto creado con éxito!";
+                // HISTORIAL
+                var historial = new HistorialAccion
+                {
+                    Accion = "Crear",
+                    NombreProducto = Producto.Nombre,
+                    CodigoProducto = Producto.CodigoProducto,
+                    UsuarioId = int.Parse(userId),
+                    Fecha = DateTime.Now,
+                    Detalles = $"Precio: {Producto.Precio}€ | Stock: {Producto.Stock}"
+                };
+                _context.HistorialAcciones.Add(historial);
+                await _context.SaveChangesAsync();
+
+                TempData["Mensaje"] = "Producto creado con éxito.";
                 TempData["Tipo"] = "success";
                 return RedirectToPage("./Inicio");
             }
