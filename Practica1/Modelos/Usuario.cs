@@ -8,7 +8,6 @@ namespace Practica1.Modelos
     [Table("user")]
     public class Usuario
     {
-        internal readonly string Email;
 
         [Key]
         public int Id { get; set; }
@@ -18,6 +17,9 @@ namespace Practica1.Modelos
 
         [Column("contraseña")]
         public string Contraseña { get; set; }
+
+        [Column("email")]
+        public string? Email { get; set; }
 
         // --- NUEVAS COLUMNAS ---
         [Column("rol")]

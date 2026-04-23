@@ -44,7 +44,7 @@ namespace Practica1.Pages.Password
 
             // 3. Construir el enlace
             var enlace = Url.Page(
-                "/ResetPassword",
+                "/Password/ResetPassword",
                 pageHandler: null,
                 values: new { token = token },
                 protocol: Request.Scheme
