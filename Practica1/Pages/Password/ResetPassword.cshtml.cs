@@ -29,37 +29,33 @@ namespace Practica1.Pages.Password
 
         public async Task OnGetAsync()
         {
-            // Validar token al cargar la página
             var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(u => u.ResetToken == Token
                                        && u.ResetTokenExpiry > DateTime.Now);
-
             if (usuario == null)
                 TokenInvalido = true;
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // 1. Validar que las contraseñas coinciden
+            // 1. Validar que coinciden
             if (NuevaPassword != ConfirmarPassword)
             {
                 ErrorPassword = "Las contraseñas no coinciden.";
                 return Page();
             }
 
-            // 2. Buscar usuario con token válido
+            // 2. Buscar usuario con token válido y no caducado
             var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(u => u.ResetToken == Token
                                        && u.ResetTokenExpiry > DateTime.Now);
-
             if (usuario == null)
             {
                 TokenInvalido = true;
                 return Page();
             }
 
-            // 3. Guardar nueva contraseña y limpiar el token
-            // Si usas hash, aquí harías: usuario.Password = HashPassword(NuevaPassword);
+            // 3. Guardar nueva contraseña y limpiar token
             usuario.Contraseña = NuevaPassword;
             usuario.ResetToken = null;
             usuario.ResetTokenExpiry = null;

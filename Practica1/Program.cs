@@ -1,18 +1,20 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Practica1.Datos;
-using Practica1.Modelos; // Asegúrate de que esto esté aquí
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Practica1.Modelos;
+using Practica1.Services;
+using Practica1.Services; // ? Añade este using
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Razor Pages
 builder.Services.AddRazorPages();
 
-// DbContext (Usando tu ApplicationDbContext de la carpeta Datos)
+// DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ??? AUTENTICACIÓN CON COOKIES
+// Autenticación con Cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -22,7 +24,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization();
 
-var app = builder.Build();
+// ? AQUÍ, ANTES DEL BUILD
+builder.Services.Configure<SmtpSettings>(
+    builder.Configuration.GetSection("SmtpSettings"));
+builder.Services.AddScoped<EmailService>();
+
+var app = builder.Build(); // ? Build siempre el último
 
 if (!app.Environment.IsDevelopment())
 {
@@ -31,14 +38,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapRazorPages();
-
 app.Run();
-
-// ?? AQUÍ YA NO HAY NADA MÁS. 
-// Las clases duplicadas han sido eliminadas para que el proyecto 
-// use las que están en tu carpeta 'Modelos'.
