@@ -8,6 +8,8 @@ namespace Practica1.Modelos
     [Table("user")]
     public class Usuario
     {
+        internal readonly string Email;
+
         [Key]
         public int Id { get; set; }
 
@@ -23,6 +25,9 @@ namespace Practica1.Modelos
 
         [Column("activo")]
         public bool Activo { get; set; } = true;
+
+        public string? ResetToken { get; set; }
+        public DateTime? ResetTokenExpiry { get; set; }
 
         public virtual ICollection<Producto> Productos { get; set; }
     }
