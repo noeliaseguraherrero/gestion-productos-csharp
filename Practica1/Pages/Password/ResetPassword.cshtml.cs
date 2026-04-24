@@ -66,58 +66,70 @@ namespace Practica1.Pages.Password
 
             // 4. Enviar correo de confirmacion
             await _emailService.EnviarEmailAsync(
-                destinatario: usuario.Email!,
-                asunto: "Contrasena actualizada - BecariosBD",
-                cuerpoHtml: $@"
-                <div style='font-family: Inter, Arial, sans-serif; background-color: #f9f9f9;
-                            padding: 40px 20px; min-height: 100vh;'>
-                    <div style='max-width: 520px; margin: auto; background: #ffffff;
-                                border-radius: 30px; padding: 50px;
-                                box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-                                border: 1px solid #f0f0f0;'>
+                destinatario: usuario.Email!, asunto: "Contrasena actualizada - BecariosBD",
+cuerpoHtml: $@"
+<div style='font-family:Inter,Arial,sans-serif;background:#f1f5f9;padding:40px 20px;'>
+    <div style='max-width:480px;margin:0 auto;'>
 
-                        <h1 style='text-align: center; font-weight: 800; font-size: 1.8rem;
-                                   color: #1a1a1a; text-transform: uppercase;
-                                   letter-spacing: -1px; margin: 0 0 8px 0;'>
-                            Contrasena Actualizada
-                        </h1>
-                        <p style='text-align: center; color: #999; font-size: 0.78rem;
-                                  font-weight: 700; letter-spacing: 2px;
-                                  text-transform: uppercase; margin: 0 0 40px 0;'>
-                            BecariosBD · Gestion Administrativa
-                        </p>
+        <!-- CABECERA -->
+        <div style='background:#1d4ed8;border-radius:16px 16px 0 0;
+                    padding:28px 35px;text-align:center;'>
+            <h1 style='color:#fff;font-size:1.1rem;font-weight:800;margin:0;
+                       text-transform:uppercase;letter-spacing:2px;'>
+                BecariosBD
+            </h1>
+        </div>
 
-                        <div style='background: #dcfce7; border: 1px solid #bbf7d0;
-                                    border-radius: 15px; padding: 20px;
-                                    text-align: center; margin-bottom: 30px;'>
-                            <span style='color: #166534; font-weight: 700; font-size: 0.95rem;'>
-                                Tu contrasena ha sido actualizada correctamente.
-                            </span>
-                        </div>
+        <!-- CUERPO -->
+        <div style='background:#fff;border-radius:0 0 16px 16px;
+                    padding:40px 35px;border:1px solid #e2e8f0;border-top:none;'>
 
-                        <p style='color: #555; font-size: 1rem; line-height: 1.7; margin-bottom: 30px;'>
-                            Si no has sido tu quien ha realizado este cambio, contacta
-                            con el administrador del sistema de inmediato.
-                        </p>
+            <h2 style='color:#0f172a;font-size:1.15rem;font-weight:800;
+                       margin:0 0 8px 0;letter-spacing:-0.5px;'>
+                Contrasena actualizada
+            </h2>
+            <p style='color:#64748b;font-size:0.88rem;line-height:1.7;margin:0 0 25px 0;'>
+                Tu contrasena ha sido modificada correctamente. Ya puedes acceder al sistema.
+            </p>
 
-                        <div style='text-align: center; margin-bottom: 35px;'>
-                            <a href='{Request.Scheme}://{Request.Host}'
-                               style='display: inline-block; padding: 18px 40px;
-                                      background: #1976d2; color: #ffffff;
-                                      border-radius: 15px; text-decoration: none;
-                                      font-weight: 700; font-size: 0.9rem;
-                                      text-transform: uppercase; letter-spacing: 2px;
-                                      box-shadow: 0 8px 20px rgba(25,118,210,0.2);'>
-                                Ir al inicio de sesion
-                            </a>
-                        </div>
+            <!-- CONFIRMACION -->
+            <div style='background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;
+                        padding:14px 18px;margin-bottom:25px;text-align:center;'>
+                <span style='color:#166534;font-weight:700;font-size:0.85rem;'>
+                    Cambio realizado con exito
+                </span>
+            </div>
 
-                        <p style='color: #bbb; font-size: 0.78rem; text-align: center;
-                                  margin: 0; line-height: 1.6;'>
-                            Este es un correo automatico, por favor no respondas a este mensaje.
-                        </p>
-                    </div>
-                </div>"
+            <!-- AVISO SEGURIDAD -->
+            <div style='background:#fff1f2;border:1px solid #fecdd3;border-radius:10px;
+                        padding:14px 18px;margin-bottom:28px;'>
+                <p style='color:#be123c;font-weight:700;font-size:0.82rem;margin:0 0 4px 0;'>
+                    No reconoces este cambio?
+                </p>
+                <p style='color:#64748b;font-size:0.78rem;margin:0;line-height:1.6;'>
+                    Contacta con el administrador del sistema de inmediato.
+                </p>
+            </div>
+
+            <!-- BOTON -->
+            <div style='text-align:center;margin-bottom:25px;'>
+                <a href='{Request.Scheme}://{Request.Host}'
+                   style='display:inline-block;padding:14px 36px;
+                          background:#1d4ed8;color:#fff;border-radius:10px;
+                          text-decoration:none;font-weight:700;font-size:0.85rem;
+                          text-transform:uppercase;letter-spacing:1.5px;'>
+                    Ir al Inicio de Sesion
+                </a>
+            </div>
+
+            <!-- PIE -->
+            <p style='color:#94a3b8;font-size:0.78rem;text-align:center;
+                      margin:0;line-height:1.7;border-top:1px solid #f1f5f9;padding-top:20px;'>
+                Este es un correo automatico, no respondas a este mensaje.
+            </p>
+        </div>
+    </div>
+</div>"
             );
 
             Exito = true;

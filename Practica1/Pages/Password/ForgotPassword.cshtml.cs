@@ -55,56 +55,76 @@ namespace Practica1.Pages.Password
                 );
 
                 await _emailService.EnviarEmailAsync(
-                    destinatario: usuario.Email!,
-                    asunto: "Recuperación de contraseña - BecariosBD", cuerpoHtml: $@"
-<div style='font-family: Inter, Arial, sans-serif; background-color: #f9f9f9;
-            padding: 40px 20px; min-height: 100vh;'>
-    <div style='max-width: 520px; margin: auto; background: #ffffff;
-                border-radius: 30px; padding: 50px;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-                border: 1px solid #f0f0f0;'>
+                    destinatario: usuario.Email!, asunto: "Recuperacion de contrasena - BecariosBD",
+cuerpoHtml: $@"
+<div style='font-family:Inter,Arial,sans-serif;background:#f1f5f9;padding:40px 20px;'>
+    <div style='max-width:480px;margin:0 auto;'>
 
-        <h1 style='text-align: center; font-weight: 800; font-size: 1.8rem;
-                   color: #1a1a1a; text-transform: uppercase;
-                   letter-spacing: -1px; margin: 0 0 8px 0;'>
-            Recuperar Acceso
-        </h1>
-        <p style='text-align: center; color: #999; font-size: 0.78rem;
-                  font-weight: 700; letter-spacing: 2px;
-                  text-transform: uppercase; margin: 0 0 40px 0;'>
-            BecariosBD · Gestion Administrativa
-        </p>
-
-        <p style='color: #555; font-size: 1rem; line-height: 1.7; margin-bottom: 30px;'>
-            Hemos recibido una solicitud para restablecer la contrasena de tu cuenta.
-            Haz clic en el boton para continuar:
-        </p>
-
-        <div style='text-align: center; margin-bottom: 35px;'>
-            <a href='{enlace}'
-               style='display: inline-block; padding: 18px 40px;
-                      background: #1976d2; color: #ffffff;
-                      border-radius: 15px; text-decoration: none;
-                      font-weight: 700; font-size: 0.9rem;
-                      text-transform: uppercase; letter-spacing: 2px;
-                      box-shadow: 0 8px 20px rgba(25,118,210,0.2);'>
-                Restablecer Contrasena
-            </a>
+        <!-- CABECERA -->
+        <div style='background:#1d4ed8;border-radius:16px 16px 0 0;
+                    padding:28px 35px;text-align:center;'>
+            <h1 style='color:#fff;font-size:1.1rem;font-weight:800;margin:0;
+                       text-transform:uppercase;letter-spacing:2px;'>
+                BecariosBD
+            </h1>
         </div>
 
-        <div style='background: #fff8e1; border: 1px solid #ffe082;
-                    border-radius: 12px; padding: 14px 18px;
-                    text-align: center; margin-bottom: 25px;'>
-            <span style='color: #f57f17; font-weight: 700; font-size: 0.85rem;'>
-                Este enlace caduca en 1 hora
-            </span>
-        </div>
+        <!-- CUERPO -->
+        <div style='background:#fff;border-radius:0 0 16px 16px;
+                    padding:40px 35px;border:1px solid #e2e8f0;border-top:none;'>
 
-        <p style='color: #bbb; font-size: 0.78rem; text-align: center;
-                  margin: 0; line-height: 1.6;'>
-            Si no solicitaste este cambio, ignora este correo.<br>
-            Tu contrasena no sera modificada.
-        </p>
+            <h2 style='color:#0f172a;font-size:1.15rem;font-weight:800;
+                       margin:0 0 8px 0;letter-spacing:-0.5px;'>
+                Recuperar contrasena
+            </h2>
+            <p style='color:#64748b;font-size:0.88rem;line-height:1.7;margin:0 0 28px 0;'>
+                Hemos recibido una solicitud para restablecer la contrasena de tu cuenta.
+                Sigue estos pasos:
+            </p>
+
+            <!-- PASOS -->
+            <div style='margin-bottom:28px;'>
+                <div style='display:flex;align-items:center;gap:12px;margin-bottom:12px;'>
+                    <span style='width:22px;height:22px;border-radius:50%;background:#1d4ed8;
+                                 color:#fff;font-size:0.7rem;font-weight:800;
+                                 display:inline-flex;align-items:center;
+                                 justify-content:center;flex-shrink:0;'>1</span>
+                    <span style='color:#475569;font-size:0.85rem;'>Haz clic en el boton de abajo</span>
+                </div>
+                <div style='display:flex;align-items:center;gap:12px;margin-bottom:12px;'>
+                    <span style='width:22px;height:22px;border-radius:50%;background:#1d4ed8;
+                                 color:#fff;font-size:0.7rem;font-weight:800;
+                                 display:inline-flex;align-items:center;
+                                 justify-content:center;flex-shrink:0;'>2</span>
+                    <span style='color:#475569;font-size:0.85rem;'>Escribe tu nueva contrasena</span>
+                </div>
+                <div style='display:flex;align-items:center;gap:12px;'>
+                    <span style='width:22px;height:22px;border-radius:50%;background:#1d4ed8;
+                                 color:#fff;font-size:0.7rem;font-weight:800;
+                                 display:inline-flex;align-items:center;
+                                 justify-content:center;flex-shrink:0;'>3</span>
+                    <span style='color:#475569;font-size:0.85rem;'>Accede normalmente al sistema</span>
+                </div>
+            </div>
+
+            <!-- BOTON -->
+            <div style='text-align:center;margin-bottom:25px;'>
+                <a href='{enlace}'
+                   style='display:inline-block;padding:14px 36px;
+                          background:#1d4ed8;color:#fff;border-radius:10px;
+                          text-decoration:none;font-weight:700;font-size:0.85rem;
+                          text-transform:uppercase;letter-spacing:1.5px;'>
+                    Restablecer Contrasena
+                </a>
+            </div>
+
+            <!-- AVISO -->
+            <p style='color:#94a3b8;font-size:0.78rem;text-align:center;
+                      margin:0;line-height:1.7;border-top:1px solid #f1f5f9;padding-top:20px;'>
+                Este enlace caduca en <strong style='color:#c2410c;'>1 hora</strong>.<br>
+                Si no solicitaste este cambio, ignora este correo.
+            </p>
+        </div>
     </div>
 </div>"
                 );
