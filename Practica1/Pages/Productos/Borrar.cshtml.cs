@@ -27,8 +27,12 @@ namespace Practica1.Pages.Productos
                 return NotFound();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (Producto.UsuarioId.ToString() != userId)
+
+            // Permitir si es el dueño O si es Admin
+            if (Producto.UsuarioId.ToString() != userId && !User.IsInRole("Admin"))
+            {
                 return Forbid();
+            }
 
             return Page();
         }
@@ -41,19 +45,24 @@ namespace Practica1.Pages.Productos
                 return NotFound();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (productoBorrar.UsuarioId.ToString() != userId)
-                return Forbid();
 
-            // HISTORIAL — guardamos antes de borrar
+            // Validación de seguridad ajustada para el Admin
+            if (productoBorrar.UsuarioId.ToString() != userId && !User.IsInRole("Admin"))
+            {
+                return Forbid();
+            }
+
+            // El resto del código del historial y borrado se mantiene igual...
             var historial = new HistorialAccion
             {
                 Accion = "Eliminar",
                 NombreProducto = productoBorrar.Nombre,
                 CodigoProducto = productoBorrar.CodigoProducto,
-                UsuarioId = int.Parse(userId),
+                UsuarioId = int.Parse(userId), // Guardará el ID del Admin que lo borró
                 Fecha = DateTime.Now,
                 Detalles = $"Precio: {productoBorrar.Precio}€ | Stock: {productoBorrar.Stock}"
             };
+
             _context.HistorialAcciones.Add(historial);
             await _context.SaveChangesAsync();
 

@@ -1,15 +1,19 @@
 ﻿@page
 @model Practica1.Pages.Productos.DetalleModel
 @{
-    ViewData["Title"] = "Detalle del Producto - BecariosBD";
+    ViewData["Title"] = "Detalle - BecariosBD";
 }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
     nav, .navbar, footer, header:not(.header-home) {
         display: none !important;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
     }
 
     body {
@@ -17,178 +21,476 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #f0f4f8 0%, #e8edf2 100%);
+        color: #1a1a2e;
+    }
+
+    .app-layout {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 240px;
+        min-height: 100vh;
+        background: #0f172a;
         display: flex;
         flex-direction: column;
-        font-family: 'Inter', sans-serif;
-        background-color: #ffffff;
-        color: #333;
+        padding: 30px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        transition: width 0.3s ease;
     }
 
-    .main-container {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        width: 100%;
-        padding: 40px 15px;
-        box-sizing: border-box;
+    .sidebar-logo {
+        padding: 0 25px 30px 25px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        margin-bottom: 20px;
     }
 
-    .glass-card {
-        background: #ffffff;
-        padding: 40px 35px;
-        border-radius: 30px;
-        width: 100%;
-        max-width: 1100px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-        border: 1px solid #f0f0f0;
-        box-sizing: border-box;
-    }
-
-    h1 {
-        margin: 0 0 35px 0;
-        text-align: center;
-        font-weight: 800;
-        letter-spacing: -1px;
-        font-size: clamp(1.6rem, 4vw, 2.8rem);
-        text-transform: uppercase;
-        color: #1a1a1a;
-    }
-
-    .info-content {
-        max-width: 600px;
-        margin: 0 auto;
-        background-color: #fafafa;
-        padding: 35px 30px;
-        border-radius: 20px;
-        border: 1px solid #eee;
-        box-sizing: border-box;
-    }
-
-    .info-item {
-        margin-bottom: 22px;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 14px;
-    }
-
-        .info-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
+        .sidebar-logo h2 {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
         }
 
-    .info-label {
-        display: block;
-        font-size: 0.78rem;
-        color: darkred;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 6px;
+        .sidebar-logo span {
+            color: #3b82f6;
+        }
+
+        .sidebar-logo p {
+            color: #64748b;
+            font-size: 0.72rem;
+            margin: 4px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+    .sidebar-section {
+        padding: 0 15px;
+        margin-bottom: 25px;
     }
 
-    .info-value {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #1a1a1a;
-    }
-
-    .btn-container {
-        max-width: 600px;
-        margin: 30px auto 0 auto;
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-    }
-
-    .btn-cyber {
-        flex: 1;
-        min-width: 140px;
-        padding: 16px;
-        border-radius: 13px;
-        background: #fff;
-        color: #666;
-        border: 1px solid #ddd;
+    .sidebar-section-title {
+        color: #475569;
+        font-size: 0.65rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 1.5px;
-        cursor: pointer;
-        transition: all 0.3s ease;
+        padding: 0 10px;
+        margin-bottom: 8px;
+    }
+
+    .sidebar-item {
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 8px;
+        gap: 10px;
+        padding: 11px 12px;
+        border-radius: 10px;
+        color: #94a3b8;
         text-decoration: none;
-        font-family: 'Inter', sans-serif;
-        font-size: 0.9rem;
-    }
-
-        .btn-cyber:hover {
-            background: #f5f5f5;
-            color: #1a1a1a;
-            border-color: #ccc;
-            transform: translateY(-3px);
-        }
-
-    @@media (max-width: 600px) {
-        .glass-card
-
-    {
-        padding: 25px 15px;
-        border-radius: 20px;
-    }
-
-    .main-container {
-        padding: 20px 10px;
-    }
-
-    .info-content {
-        padding: 20px 15px;
-    }
-
-    .btn-container {
-        flex-direction: column;
-    }
-
-    .btn-cyber {
-        flex: unset;
+        font-size: 0.88rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        margin-bottom: 3px;
+        cursor: pointer;
+        border: none;
+        background: transparent;
         width: 100%;
     }
 
+        .sidebar-item:hover {
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(59,130,246,0.3);
+        }
+
+        .sidebar-item i {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+    .sidebar-bottom {
+        margin-top: auto;
+        padding: 20px 15px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.05);
+        margin-bottom: 10px;
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+
+    .user-details {
+        overflow: hidden;
+    }
+
+    .user-name {
+        color: #e2e8f0;
+        font-size: 0.82rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-role {
+        color: #64748b;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-logout-sidebar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        color: #ef4444;
+        background: rgba(239,68,68,0.08);
+        border: 1px solid rgba(239,68,68,0.15);
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        width: 100%;
+        justify-content: center;
+    }
+
+        .btn-logout-sidebar:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+    .main-content {
+        margin-left: 240px;
+        flex: 1;
+        padding: 30px;
+        min-height: 100vh;
+    }
+
+    .topbar {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .topbar-title h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+
+    .topbar-title p {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin: 4px 0 0 0;
+    }
+
+    .detail-card {
+        background: #fff;
+        border-radius: 20px;
+        border: 1px solid #f1f5f9;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+        max-width: 800px;
+        overflow: hidden;
+    }
+
+    .detail-header {
+        padding: 24px 28px;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .detail-header h2 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+    .stock-badge {
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .stock-ok {
+        background: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+    }
+
+    .stock-low {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+    }
+
+    .detail-body {
+        padding: 28px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+    }
+
+    .data-item {
+        padding: 16px 0;
+        border-bottom: 1px solid #f8fafc;
+    }
+
+        .data-item:nth-child(odd) {
+            padding-right: 30px;
+            border-right: 1px solid #f8fafc;
+        }
+
+        .data-item:nth-child(even) {
+            padding-left: 30px;
+        }
+
+    .data-label {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 6px;
+    }
+
+    .data-value {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #0f172a;
+    }
+
+        .data-value.price {
+            font-size: 1.4rem;
+            color: #1d4ed8;
+            font-weight: 800;
+        }
+
+    .detail-footer {
+        padding: 20px 28px;
+        background: #f8fafc;
+        border-top: 1px solid #f1f5f9;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .btn-action {
+        padding: 10px 22px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.88rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        text-decoration: none;
+    }
+
+    .btn-back {
+        background: white;
+        color: #64748b;
+        border: 1px solid #e2e8f0;
+    }
+
+        .btn-back:hover {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+    .btn-edit {
+        background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+        color: white;
+        box-shadow: 0 4px 15px rgba(59,130,246,0.3);
+    }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59,130,246,0.4);
+            color: white;
+        }
+
+    @@media (max-width: 1024px) {
+        .sidebar {
+            width: 70px;
+        }
+
+        .sidebar-logo h2, .sidebar-logo p, .sidebar-section-title, .sidebar-item span, .user-details, .btn-logout-sidebar span {
+            display: none;
+        }
+
+        .sidebar-item {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .user-info {
+            justify-content: center;
+        }
+
+        .btn-logout-sidebar {
+            justify-content: center;
+        }
+
+        .main-content {
+            margin-left: 70px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 20px 15px;
+        }
+
+        .detail-body {
+            grid-template-columns: 1fr;
+        }
+
+        .data-item:nth-child(odd) {
+            padding-right: 0;
+            border-right: none;
+        }
+
+        .data-item:nth-child(even) {
+            padding-left: 0;
+        }
     }
 </style>
 
-<div class="main-container">
-    <div class="glass-card">
-        <h1>Detalle del Producto</h1>
-
-        <div class="info-content">
-            <div class="info-item">
-                <span class="info-label">Código de Producto</span>
-                <span class="info-value">@Model.Producto.CodigoProducto</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Nombre del Producto</span>
-                <span class="info-value">@Model.Producto.Nombre</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Precio Unitario</span>
-                <span class="info-value">@Model.Producto.Precio.ToString("C")</span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Stock Actual</span>
-                <span class="info-value" style="color:@(Model.Producto.Stock < 5 ? "#d32f2f" : "#1b5e20")">
-                    @Model.Producto.Stock unidades
-                </span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">Fecha de Registro</span>
-                <span class="info-value">@Model.Producto.FechaCreacion.ToString("f")</span>
-            </div>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h2>Becarios<span>BD</span></h2>
+            <p>Panel de Control</p>
         </div>
-
-        <div class="btn-container">
-            <a asp-page="./Inicio" class="btn-cyber">
-                <i class="bi bi-arrow-left"></i> Volver al Inventario
+        <div class="sidebar-section">
+            <p class="sidebar-section-title">Principal</p>
+            <a class="sidebar-item" asp-page="/Productos/Inicio">
+                <i class="bi bi-grid-1x2-fill"></i><span>Productos</span>
+            </a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="sidebar-item" asp-page="/Usuarios/Index">
+                    <i class="bi bi-people-fill"></i><span>Usuarios</span>
+                </a>
+                <a class="sidebar-item" asp-page="./Historial">
+                    <i class="bi bi-clock-history"></i><span>Historial</span>
+                </a>
+            }
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-section-title">Herramientas</p>
+            <a class="sidebar-item" asp-page="Importar">
+                <i class="bi bi-file-earmark-arrow-up"></i><span>Importar CSV</span>
+            </a>
+            <a class="sidebar-item" asp-page="Crear">
+                <i class="bi bi-plus-circle"></i><span>Nuevo Producto</span>
             </a>
         </div>
-    </div>
+        <div class="sidebar-bottom">
+            <div class="user-info">
+                <div class="user-avatar">@User.Identity.Name?.Substring(0, 1).ToUpper()</div>
+                <div class="user-details">
+                    <div class="user-name">@User.Identity.Name</div>
+                    <div class="user-role">@(User.IsInRole("Admin") ? "Administrador" : "Usuario")</div>
+                </div>
+            </div>
+            <a asp-page="/Index" asp-page-handler="Logout" class="btn-logout-sidebar">
+                <i class="bi bi-box-arrow-right"></i><span>Cerrar Sesion</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="topbar">
+            <div class="topbar-title">
+                <h1>Ficha de Producto</h1>
+                <p>Informacion detallada del articulo seleccionado</p>
+            </div>
+        </div>
+
+        <div class="detail-card">
+            <div class="detail-header">
+                <h2><i class="bi bi-box-seam" style="color:#3b82f6;margin-right:8px;"></i>@Model.Producto.Nombre</h2>
+                <span class="stock-badge @(Model.Producto.Stock < 10 ? "stock-low" : "stock-ok")">
+                    <i class="bi @(Model.Producto.Stock < 10 ? "bi-exclamation-circle-fill" : "bi-check-circle-fill")"></i>
+                    Stock: @Model.Producto.Stock
+                </span>
+            </div>
+            <div class="detail-body">
+                <div class="data-item">
+                    <span class="data-label">Nombre Comercial</span>
+                    <span class="data-value">@Model.Producto.Nombre</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Codigo ID</span>
+                    <span class="data-value">@Model.Producto.CodigoProducto</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Precio Unitario</span>
+                    <span class="data-value price">@Model.Producto.Precio.ToString("C")</span>
+                </div>
+                <div class="data-item">
+                    <span class="data-label">Fecha de Registro</span>
+                    <span class="data-value">@Model.Producto.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</span>
+                </div>
+            </div>
+            <div class="detail-footer">
+                <a href="/Productos/Inicio" class="btn-action btn-back">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+            </div>
+        </div>
+    </main>
 </div>

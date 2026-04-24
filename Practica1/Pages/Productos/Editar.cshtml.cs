@@ -27,8 +27,10 @@ namespace Practica1.Pages.Productos
                 return NotFound();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (Producto.UsuarioId.ToString() != userId)
+            if (Producto.UsuarioId.ToString() != userId && !User.IsInRole("Admin"))
+            {
                 return Forbid();
+            }
 
             return Page();
         }
@@ -46,8 +48,10 @@ namespace Practica1.Pages.Productos
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (productoDb == null || productoDb.UsuarioId.ToString() != userId)
+            if (productoDb == null || (productoDb.UsuarioId.ToString() != userId && !User.IsInRole("Admin")))
+            {
                 return Forbid();
+            }
 
             bool codigoExiste = await _context.Producto
                 .AnyAsync(p => p.CodigoProducto == Producto.CodigoProducto

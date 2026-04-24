@@ -4,12 +4,16 @@
     ViewData["Title"] = "Importar Productos - BecariosBD";
 }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
     nav, .navbar, footer, header:not(.header-home) {
         display: none !important;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
     }
 
     body {
@@ -17,220 +21,418 @@
         padding: 0;
         width: 100%;
         min-height: 100vh;
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #f0f4f8 0%, #e8edf2 100%);
+        color: #1a1a2e;
+    }
+
+    .app-layout {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 240px;
+        min-height: 100vh;
+        background: #0f172a;
         display: flex;
         flex-direction: column;
-        font-family: 'Inter', sans-serif;
-        background-color: #ffffff;
-        color: #333;
+        padding: 30px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        transition: width 0.3s ease;
     }
 
-    .main-container {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        width: 100%;
-        padding: 60px 20px;
-        box-sizing: border-box;
+    .sidebar-logo {
+        padding: 0 25px 30px 25px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        margin-bottom: 20px;
     }
 
-    .glass-card {
-        background: #ffffff;
-        padding: 50px;
-        border-radius: 40px;
-        width: 100%;
-        max-width: 1100px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-        border: 1px solid #f0f0f0;
+        .sidebar-logo h2 {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-logo span {
+            color: #3b82f6;
+        }
+
+        .sidebar-logo p {
+            color: #64748b;
+            font-size: 0.72rem;
+            margin: 4px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+    .sidebar-section {
+        padding: 0 15px;
+        margin-bottom: 25px;
     }
 
-    h1 {
-        margin: 0 0 10px 0;
-        text-align: center;
-        font-weight: 800;
-        letter-spacing: -1.5px;
-        font-size: 2.8rem;
+    .sidebar-section-title {
+        color: #475569;
+        font-size: 0.65rem;
+        font-weight: 700;
         text-transform: uppercase;
-        color: #1a1a1a;
+        letter-spacing: 1.5px;
+        padding: 0 10px;
+        margin-bottom: 8px;
     }
 
-    .subtitle {
-        text-align: center;
-        color: #999;
-        font-size: 0.95rem;
-        margin-bottom: 40px;
-    }
-
-    /* ZONA DE SUBIDA */
-    .upload-zone {
-        border: 2px dashed #ddd;
-        border-radius: 20px;
-        padding: 50px;
-        text-align: center;
-        background: #fafafa;
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 12px;
+        border-radius: 10px;
+        color: #94a3b8;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        margin-bottom: 3px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        border: none;
+        background: transparent;
+        width: 100%;
+    }
+
+        .sidebar-item:hover {
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(59,130,246,0.3);
+        }
+
+        .sidebar-item i {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+    .sidebar-bottom {
+        margin-top: auto;
+        padding: 20px 15px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.05);
+        margin-bottom: 10px;
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+
+    .user-details {
+        overflow: hidden;
+    }
+
+    .user-name {
+        color: #e2e8f0;
+        font-size: 0.82rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-role {
+        color: #64748b;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-logout-sidebar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        color: #ef4444;
+        background: rgba(239,68,68,0.08);
+        border: 1px solid rgba(239,68,68,0.15);
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        width: 100%;
+        justify-content: center;
+    }
+
+        .btn-logout-sidebar:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+    .main-content {
+        margin-left: 240px;
+        flex: 1;
+        padding: 30px;
+        min-height: 100vh;
+    }
+
+    .topbar {
+        display: flex;
+        align-items: center;
         margin-bottom: 30px;
     }
 
-        .upload-zone:hover, .upload-zone.dragover {
-            border-color: #1565c0;
-            background: #e3f2fd;
+    .topbar-title h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+
+    .topbar-title p {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin: 4px 0 0 0;
+    }
+
+    .import-card {
+        background: #fff;
+        border-radius: 20px;
+        border: 1px solid #f1f5f9;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+        max-width: 900px;
+        overflow: hidden;
+    }
+
+    .form-header {
+        padding: 24px 28px;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+        .form-header h2 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
         }
 
-        .upload-zone i {
-            font-size: 3rem;
-            color: #1565c0;
-            margin-bottom: 15px;
+        .form-header p {
+            margin: 4px 0 0 0;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+    .form-body {
+        padding: 28px;
+    }
+
+    .csv-info {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        border: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+        .csv-info i {
+            color: #3b82f6;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .csv-info span {
+            font-size: 0.82rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .csv-info code {
+            color: #1d4ed8;
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+
+    .upload-box {
+        border: 2px dashed #e2e8f0;
+        border-radius: 16px;
+        padding: 48px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: #fff;
+        margin-bottom: 24px;
+    }
+
+        .upload-box:hover, .upload-box.dragover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .upload-box i {
+            font-size: 2.5rem;
+            color: #3b82f6;
+            margin-bottom: 12px;
             display: block;
         }
 
-        .upload-zone p {
+        .upload-box p {
             margin: 0;
-            color: #666;
-            font-size: 1rem;
+            color: #64748b;
+            font-size: 0.92rem;
         }
 
-        .upload-zone .file-name {
-            margin-top: 10px;
-            font-weight: 700;
-            color: #1565c0;
-            font-size: 0.95rem;
-        }
+    .file-name {
+        margin-top: 8px;
+        font-weight: 700;
+        color: #0f172a;
+        font-size: 0.88rem;
+    }
 
     input[type="file"] {
         display: none;
     }
 
-    /* BOTONES */
-    .btn-container {
+    .form-footer {
+        padding: 20px 28px;
+        background: #f8fafc;
+        border-top: 1px solid #f1f5f9;
         display: flex;
-        gap: 15px;
-        margin-top: 10px;
-    }
-
-    .btn-cyber {
-        flex: 2;
-        padding: 18px;
-        border-radius: 15px;
-        border: none;
-        background: #1565c0;
-        color: white;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
         gap: 10px;
-        text-decoration: none;
-        box-shadow: 0 8px 20px rgba(21, 101, 192, 0.15);
-        font-family: 'Inter', sans-serif;
-        font-size: 1rem;
     }
 
-        .btn-cyber:hover {
-            transform: translateY(-3px);
-            background: #1976d2;
-            box-shadow: 0 12px 25px rgba(21, 101, 192, 0.25);
+    .btn-action {
+        padding: 10px 22px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.88rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        text-decoration: none;
+    }
+
+    .btn-import {
+        background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+        color: white;
+        box-shadow: 0 4px 15px rgba(59,130,246,0.3);
+    }
+
+        .btn-import:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59,130,246,0.4);
+            color: white;
         }
 
-    .btn-back {
-        flex: 1;
-        background: #ffffff;
-        color: #666;
-        border: 1px solid #ddd;
-        box-shadow: none;
+    .btn-cancel {
+        background: white;
+        color: #64748b;
+        border: 1px solid #e2e8f0;
     }
 
-        .btn-back:hover {
-            background: #f5f5f5;
-            color: #333;
-            border-color: #ccc;
+        .btn-cancel:hover {
+            background: #f1f5f9;
+            color: #334155;
         }
 
     /* RESULTADOS */
-    .results-container {
-        margin-top: 40px;
-    }
-
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        margin-bottom: 30px;
+        gap: 16px;
+        margin-top: 28px;
     }
 
-    .stat-card {
-        padding: 25px;
-        border-radius: 20px;
+    .stat-item {
+        padding: 20px;
+        border-radius: 16px;
         text-align: center;
-        border: 1px solid #f0f0f0;
+        border: 1px solid #f1f5f9;
+        transition: all 0.3s ease;
     }
 
-        .stat-card i {
-            font-size: 2rem;
-            margin-bottom: 10px;
+        .stat-item i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
             display: block;
         }
 
-        .stat-card .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            display: block;
-        }
-
-        .stat-card .stat-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #999;
-            font-weight: 600;
-        }
-
-    .stat-created {
-        background: #e8f5e9;
-        border-color: #c8e6c9;
+    .stat-num {
+        font-size: 1.8rem;
+        font-weight: 800;
+        display: block;
     }
 
-        .stat-created i, .stat-created .stat-number {
-            color: #2e7d32;
-        }
-
-    .stat-updated {
-        background: #e3f2fd;
-        border-color: #bbdefb;
-    }
-
-        .stat-updated i, .stat-updated .stat-number {
-            color: #1565c0;
-        }
-
-    .stat-error {
-        background: #fce4ec;
-        border-color: #f8bbd0;
-    }
-
-        .stat-error i, .stat-error .stat-number {
-            color: #c62828;
-        }
-
-    /* TABLA DE ERRORES */
-    .error-table-container {
-        border-radius: 20px;
-        overflow: hidden;
-        border: 1px solid #fecdd3;
-    }
-
-    .error-table-header {
-        background: #fee2e2;
-        padding: 15px 20px;
+    .stat-label {
+        font-size: 0.65rem;
         font-weight: 700;
-        font-size: 0.85rem;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #991b1b;
+        color: #64748b;
+    }
+
+    .s-new {
+        background: #f0fdf4;
+        border-color: #bbf7d0;
+        color: #15803d;
+    }
+
+    .s-upd {
+        background: #eff6ff;
+        border-color: #bfdbfe;
+        color: #1d4ed8;
+    }
+
+    .s-err {
+        background: #fff1f2;
+        border-color: #fecdd3;
+        color: #be123c;
+    }
+
+    .error-log {
+        margin-top: 24px;
+        border-radius: 16px;
+        border: 1px solid #fecdd3;
+        overflow: hidden;
+    }
+
+    .error-log-header {
+        background: #fff1f2;
+        padding: 12px 20px;
+        color: #be123c;
+        font-weight: 700;
+        font-size: 0.8rem;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -239,202 +441,222 @@
     .error-table {
         width: 100%;
         border-collapse: collapse;
-        background: #fff;
+        font-size: 0.85rem;
     }
 
         .error-table th {
             text-align: left;
-            padding: 15px 20px;
-            color: #991b1b;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
+            padding: 12px 20px;
+            background: #fff;
             border-bottom: 1px solid #fecdd3;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
 
         .error-table td {
-            padding: 15px 20px;
-            border-bottom: 1px solid #fff5f5;
-            font-size: 0.9rem;
+            padding: 12px 20px;
+            border-bottom: 1px solid #fff1f2;
+            background: #fff;
         }
 
-        .error-table tr:last-child td {
-            border-bottom: none;
+    @@media (max-width: 1024px) {
+        .sidebar {
+            width: 70px;
         }
 
-    /* FORMATO CSV */
-    .csv-format {
-        background: #f8f9fa;
-        border-radius: 15px;
-        padding: 20px 25px;
-        margin-bottom: 30px;
-        border: 1px solid #eee;
-    }
-
-        .csv-format h4 {
-            margin: 0 0 10px 0;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #999;
-            font-weight: 700;
+        .sidebar-logo h2, .sidebar-logo p, .sidebar-section-title, .sidebar-item span, .user-details, .btn-logout-sidebar span {
+            display: none;
         }
 
-        .csv-format code {
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: #1565c0;
+        .sidebar-item {
+            justify-content: center;
+            padding: 12px;
         }
 
-    @@media (max-width: 600px) {
-        .glass-card
+        .user-info {
+            justify-content: center;
+        }
 
-    {
-        padding: 25px 15px;
-        border-radius: 20px;
+        .btn-logout-sidebar {
+            justify-content: center;
+        }
+
+        .main-content {
+            margin-left: 70px;
+        }
     }
 
-    .main-container {
-        padding: 20px 10px;
-    }
+    @@media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
 
-    .btn-container {
-        flex-direction: column;
-    }
+        .main-content {
+            margin-left: 0;
+            padding: 20px 15px;
+        }
 
-    .btn-cyber, .btn-back {
-        flex: unset;
-        width: 100%;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .upload-zone {
-        padding: 30px 15px;
-    }
-
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 
-<div class="main-container">
-    <div class="glass-card">
-        <h1>Importar Productos</h1>
-        <p class="subtitle">Sube un fichero CSV para importar productos masivamente a la base de datos</p>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h2>Becarios<span>BD</span></h2>
+            <p>Panel de Control</p>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-section-title">Principal</p>
+            <a class="sidebar-item" asp-page="/Productos/Inicio">
+                <i class="bi bi-grid-1x2-fill"></i><span>Productos</span>
+            </a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="sidebar-item" asp-page="/Usuarios/Index">
+                    <i class="bi bi-people-fill"></i><span>Usuarios</span>
+                </a>
+                <a class="sidebar-item" asp-page="./Historial">
+                    <i class="bi bi-clock-history"></i><span>Historial</span>
+                </a>
+            }
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-section-title">Herramientas</p>
+            <a class="sidebar-item active" asp-page="Importar">
+                <i class="bi bi-file-earmark-arrow-up"></i><span>Importar CSV</span>
+            </a>
+            <a class="sidebar-item" asp-page="Crear">
+                <i class="bi bi-plus-circle"></i><span>Nuevo Producto</span>
+            </a>
+        </div>
+        <div class="sidebar-bottom">
+            <div class="user-info">
+                <div class="user-avatar">@User.Identity.Name?.Substring(0, 1).ToUpper()</div>
+                <div class="user-details">
+                    <div class="user-name">@User.Identity.Name</div>
+                    <div class="user-role">@(User.IsInRole("Admin") ? "Administrador" : "Usuario")</div>
+                </div>
+            </div>
+            <a asp-page="/Index" asp-page-handler="Logout" class="btn-logout-sidebar">
+                <i class="bi bi-box-arrow-right"></i><span>Cerrar Sesion</span>
+            </a>
+        </div>
+    </aside>
 
-        <!-- FORMATO ESPERADO -->
-        <div class="csv-format">
-            <h4><i class="bi bi-info-circle"></i> Formato esperado del CSV</h4>
-            <code>CodigoProducto,Nombre,Precio,Stock</code><br>
-            <code>PROD-001,Monitor 27",350.00,15</code><br>
-            <code>PROD-002,Teclado mecánico,89.99,40</code>
+    <main class="main-content">
+        <div class="topbar">
+            <div class="topbar-title">
+                <h1>Importar Productos</h1>
+                <p>Carga masiva de articulos desde un fichero CSV</p>
+            </div>
         </div>
 
-        <!-- FORMULARIO DE SUBIDA -->
-        <form method="POST" enctype="multipart/form-data" id="formImportar">
-            <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileCsv').click()">
-                <i class="bi bi-file-earmark-arrow-up"></i>
-                <p>Haz clic o arrastra aquí tu fichero <strong>.csv</strong></p>
-                <p class="file-name" id="fileName">Ningún fichero seleccionado</p>
+        <div class="import-card">
+            <div class="form-header">
+                <h2><i class="bi bi-file-earmark-arrow-up" style="color:#3b82f6;margin-right:8px;"></i>Importacion por CSV</h2>
+                <p>El fichero debe seguir el formato indicado</p>
             </div>
-            <input type="file" id="fileCsv" name="FileCsv" accept=".csv" onchange="mostrarNombre(this)" />
-
-            <div class="btn-container">
-                <button type="submit" class="btn-cyber">
-                    <i class="bi bi-cloud-upload"></i> Importar Productos
-                </button>
-                <a asp-page="./Inicio" class="btn-cyber btn-back">
-                    <i class="bi bi-arrow-left"></i> Volver
-                </a>
-            </div>
-        </form>
-
-        <!-- RESULTADOS (solo se muestran tras importar) -->
-        @if (Model.MostrarResultados)
-        {
-            <div class="results-container">
-                <div class="stats-grid">
-                    <div class="stat-card stat-created">
-                        <i class="bi bi-plus-circle-fill"></i>
-                        <span class="stat-number">@Model.Creados</span>
-                        <span class="stat-label">Productos Creados</span>
-                    </div>
-                    <div class="stat-card stat-updated">
-                        <i class="bi bi-pencil-square"></i>
-                        <span class="stat-number">@Model.Actualizados</span>
-                        <span class="stat-label">Productos Actualizados</span>
-                    </div>
-                    <div class="stat-card stat-error">
-                        <i class="bi bi-x-circle-fill"></i>
-                        <span class="stat-number">@Model.Errores.Count</span>
-                        <span class="stat-label">Errores</span>
-                    </div>
+            <div class="form-body">
+                <div class="csv-info">
+                    <i class="bi bi-info-circle-fill"></i>
+                    <span>Formato requerido: <code>CodigoProducto, Nombre, Precio, Stock</code></span>
                 </div>
 
-                @if (Model.Errores.Any())
-                {
-                    <div class="error-table-container">
-                        <div class="error-table-header">
-                            <i class="bi bi-exclamation-triangle-fill"></i>
-                            Productos con errores
-                        </div>
-                        <table class="error-table">
-                            <thead>
-                                <tr>
-                                    <th>Línea</th>
-                                    <th>Código</th>
-                                    <th>Nombre</th>
-                                    <th>Motivo del error</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var error in Model.Errores)
-                                {
-                                    <tr>
-                                        <td style="color: #999; font-weight: 700;">#@error.Linea</td>
-                                        <td style="font-weight: 600;">@error.Codigo</td>
-                                        <td>@error.Nombre</td>
-                                        <td style="color: #c62828; font-weight: 600;">@error.Motivo</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="upload-box" id="dropZone" onclick="document.getElementById('fileInput').click()">
+                        <i class="bi bi-filetype-csv"></i>
+                        <p>Arrastra tu archivo CSV aqui o haz clic para seleccionar</p>
+                        <p class="file-name" id="fileText">Ningun archivo seleccionado</p>
                     </div>
+                    <input type="file" id="fileInput" name="FileCsv" accept=".csv" onchange="updateName(this)" />
+
+                    <div class="form-footer" style="padding:0;background:none;border:0;margin-top:0;">
+                        <a href="/Productos/Inicio" class="btn-action btn-cancel">
+                            <i class="bi bi-x-lg"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn-action btn-import">
+                            <i class="bi bi-cloud-arrow-up-fill"></i> Iniciar Importacion
+                        </button>
+                    </div>
+                </form>
+
+                @if (Model.MostrarResultados)
+                {
+                    <div class="stats-grid">
+                        <div class="stat-item s-new">
+                            <i class="bi bi-plus-circle"></i>
+                            <span class="stat-num">@Model.Creados</span>
+                            <span class="stat-label">Nuevos</span>
+                        </div>
+                        <div class="stat-item s-upd">
+                            <i class="bi bi-arrow-repeat"></i>
+                            <span class="stat-num">@Model.Actualizados</span>
+                            <span class="stat-label">Actualizados</span>
+                        </div>
+                        <div class="stat-item s-err">
+                            <i class="bi bi-exclamation-octagon"></i>
+                            <span class="stat-num">@Model.Errores.Count</span>
+                            <span class="stat-label">Errores</span>
+                        </div>
+                    </div>
+
+                    @if (Model.Errores.Any())
+                    {
+                        <div class="error-log">
+                            <div class="error-log-header">
+                                <i class="bi bi-bug"></i> Registro de Errores
+                            </div>
+                            <table class="error-table">
+                                <thead>
+                                    <tr>
+                                        <th>Linea</th>
+                                        <th>Codigo</th>
+                                        <th>Motivo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var error in Model.Errores)
+                                    {
+                                        <tr>
+                                            <td style="font-weight:700;color:#94a3b8;">#@error.Linea</td>
+                                            <td style="font-weight:600;color:#0f172a;">@error.Codigo</td>
+                                            <td style="color:#ef4444;font-weight:500;">@error.Motivo</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
                 }
             </div>
-        }
-    </div>
+        </div>
+    </main>
 </div>
 
 <script>
-    function mostrarNombre(input) {
-        const fileName = input.files[0]?.name ?? 'Ningún fichero seleccionado';
-        document.getElementById('fileName').textContent = fileName;
+    function updateName(input) {
+        document.getElementById('fileText').textContent = input.files[0]?.name || 'Ningun archivo seleccionado';
     }
-
-    // Drag & Drop
-    const uploadZone = document.getElementById('uploadZone');
-
-    uploadZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadZone.classList.add('dragover');
-    });
-
-    uploadZone.addEventListener('dragleave', () => {
-        uploadZone.classList.remove('dragover');
-    });
-
-    uploadZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadZone.classList.remove('dragover');
-        const file = e.dataTransfer.files[0];
-        if (file && file.name.endsWith('.csv')) {
-            const input = document.getElementById('fileCsv');
-            const dt = new DataTransfer();
-            dt.items.add(file);
-            input.files = dt.files;
-            document.getElementById('fileName').textContent = file.name;
-        }
+    const dropZone = document.getElementById('dropZone');
+    ['dragover', 'dragleave', 'drop'].forEach(evt => {
+        dropZone.addEventListener(evt, e => {
+            e.preventDefault();
+            if (evt === 'dragover') dropZone.classList.add('dragover');
+            else dropZone.classList.remove('dragover');
+            if (evt === 'drop') {
+                const file = e.dataTransfer.files[0];
+                if (file?.name.endsWith('.csv')) {
+                    const input = document.getElementById('fileInput');
+                    input.files = e.dataTransfer.files;
+                    updateName(input);
+                }
+            }
+        });
     });
 </script>
