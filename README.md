@@ -36,24 +36,24 @@ Esta plataforma es una solución integral para el control de inventarios y la ad
 
 ## 📸 Vista previa
 
-### Inicio de Sesión / Login
+* ### Inicio de Sesión / Login
 <img width="1920" height="908" alt="imgLogin" src="https://github.com/user-attachments/assets/aa895139-d16b-4b7b-9136-a0a38c791729" />
 
-### Recuperación de Contraseña
+* ### Recuperación de Contraseña
 <img width="1920" height="908" alt="imgRecuperarContraseña" src="https://github.com/user-attachments/assets/7b16af68-15b4-4290-a449-a544b3ab7323" />
 
-### Listado y Gestión de Productos
+* ### Listado y Gestión de Productos
 <img width="1897" height="917" alt="imgIndex" src="https://github.com/user-attachments/assets/38c977a2-f6f7-4151-bcc5-5654c93a3c3c" />
 
-### Gestión de Usuarios (Admin)
+* ### Gestión de Usuarios (Admin)
 <img width="1896" height="908" alt="imgControlUsuarios" src="https://github.com/user-attachments/assets/e725bb84-82b4-4837-a411-3ba2abfe3f53" />
 
-### Historial de Actividad (Admin)
+* ### Historial de Actividad (Admin)
 <img width="1892" height="915" alt="imgHistorial" src="https://github.com/user-attachments/assets/58fd367c-9944-4ea1-a55f-484940132eb0" />
 
-### Importación de Productos vía Archivo
+* ### Importación de Productos vía Archivo
 <img width="1896" height="912" alt="imgImportar" src="https://github.com/user-attachments/assets/27b5dd6a-dd92-4b6c-a473-b9c52c3266b6" />
 
-### Formulario de Alta de Producto
+* ### Formulario de Alta de Producto
 <img width="1893" height="911" alt="imgAñadirProducto" src="https://github.com/user-attachments/assets/e78674f3-6365-4369-9bcf-ab43bb92aa17" />
 
