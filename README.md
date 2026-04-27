@@ -1,5 +1,3 @@
-<img width="1920" height="1064" alt="imgLogin2" src="https://github.com/user-attachments/assets/823b22c7-c707-49ff-b2b5-62c04a05f7a8" />
-<img width="1920" height="1065" alt="imgContraseña2" src="https://github.com/user-attachments/assets/7f998f5e-7fe1-401a-89de-e3b12166cba3" />
 # Sistema de Gestión de Inventario y Usuarios 
 
 > **Aplicación Web con ASP.NET Core Razor Pages**
