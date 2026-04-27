@@ -16,9 +16,14 @@
         box-sizing: border-box;
     }
 
-    body {
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
         margin: 0;
         padding: 0;
+    }
+
+    body {
         width: 100%;
         min-height: 100vh;
         font-family: 'Inter', sans-serif;
@@ -29,6 +34,7 @@
     .app-layout {
         display: flex;
         min-height: 100vh;
+        overflow-x: hidden;
     }
 
     .sidebar {
@@ -41,8 +47,8 @@
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 100;
-        transition: width 0.3s ease;
+        z-index: 200;
+        transition: transform 0.3s ease;
     }
 
     .sidebar-logo {
@@ -99,7 +105,6 @@
         font-weight: 500;
         transition: all 0.2s ease;
         margin-bottom: 3px;
-        cursor: pointer;
         border: none;
         background: transparent;
         width: 100%;
@@ -120,6 +125,7 @@
             font-size: 1rem;
             width: 20px;
             text-align: center;
+            flex-shrink: 0;
         }
 
     .sidebar-bottom {
@@ -194,18 +200,22 @@
             color: white;
         }
 
-    .main-content {
+    .main-wrapper {
         margin-left: 240px;
         flex: 1;
         padding: 30px;
         min-height: 100vh;
+        min-width: 0;
+        width: calc(100% - 240px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .topbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 24px;
     }
 
     .topbar-title h1 {
@@ -227,6 +237,7 @@
         border-radius: 20px;
         border: 1px solid #f1f5f9;
         box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+        width: 100%;
         max-width: 800px;
         overflow: hidden;
     }
@@ -347,12 +358,56 @@
             color: #334155;
         }
 
+    /* BARRA MÓVIL */
+    .mobile-topbar {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 62px;
+        background: rgba(240, 244, 248, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.6);
+        z-index: 250;
+        align-items: center;
+        padding: 0 16px;
+    }
+
+    .menu-toggle {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #0f172a;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        flex-shrink: 0;
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 150;
+    }
+
+    /* TABLET */
     @@media (max-width: 1024px) {
         .sidebar {
             width: 70px;
         }
 
-        .sidebar-logo h2, .sidebar-logo p, .sidebar-section-title, .sidebar-item span, .user-details, .btn-logout-sidebar span {
+        .sidebar-logo h2, .sidebar-logo p,
+        .sidebar-section-title, .sidebar-item span,
+        .user-details, .btn-logout-sidebar span {
             display: none;
         }
 
@@ -369,26 +424,103 @@
             justify-content: center;
         }
 
-        .main-content {
+        .main-wrapper {
             margin-left: 70px;
+            width: calc(100% - 70px);
+        }
+
+        .form-card {
+            max-width: 100%;
         }
     }
 
-    @@media (max-width: 768px) {
-        .sidebar {
-            display: none;
+    /* MÓVIL */
+    @@media (max-width: 767px) {
+        .mobile-topbar {
+            display: flex;
         }
 
-        .main-content {
-            margin-left: 0;
-            padding: 20px 15px;
+        .sidebar {
+            width: 240px;
+            transform: translateX(-100%);
+        }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+        .sidebar-logo h2, .sidebar-logo p,
+        .sidebar-section-title, .sidebar-item span,
+        .user-details, .btn-logout-sidebar span {
+            display: block !important;
+        }
+
+        .sidebar-item {
+            justify-content: flex-start !important;
+            padding: 11px 12px !important;
+        }
+
+        .user-info {
+            justify-content: flex-start !important;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
+        }
+
+        .main-wrapper {
+            margin-left: 0 !important;
+            width: 100% !important;
+            padding: 16px;
+            padding-top: 78px;
+            align-items: stretch;
+        }
+
+        .topbar {
+            max-width: 100%;
+        }
+
+        .topbar-title h1 {
+            font-size: 1.3rem;
+        }
+
+        .form-card {
+            max-width: 100%;
+            border-radius: 16px;
+        }
+
+        .form-header {
+            padding: 18px 16px;
+        }
+
+        .form-body {
+            padding: 16px;
         }
 
         .form-grid {
             grid-template-columns: 1fr;
+            gap: 14px;
         }
+
+        .form-footer {
+            padding: 16px;
+            flex-direction: column-reverse;
+            gap: 10px;
+        }
+
+            .form-footer .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
     }
 </style>
+
+<div class="mobile-topbar">
+    <button class="menu-toggle" id="menuToggle">
+        <i class="bi bi-list" id="menuIcon"></i>
+    </button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <div class="app-layout">
     <aside class="sidebar">
@@ -434,7 +566,7 @@
         </div>
     </aside>
 
-    <main class="main-content">
+    <main class="main-wrapper">
         <div class="topbar">
             <div class="topbar-title">
                 <h1>Editar Producto</h1>
@@ -485,6 +617,40 @@
         </div>
     </main>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const menuToggle   = document.getElementById('menuToggle');
+        const menuIcon     = document.getElementById('menuIcon');
+        const sidebar      = document.querySelector('.sidebar');
+        const overlay      = document.getElementById('sidebarOverlay');
+        const mobileTopbar = document.querySelector('.mobile-topbar');
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            menuIcon.classList.replace('bi-list', 'bi-x-lg');
+            mobileTopbar.style.display = 'none';
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+            menuIcon.classList.replace('bi-x-lg', 'bi-list');
+            mobileTopbar.style.display = 'flex';
+        }
+
+        menuToggle?.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+        overlay?.addEventListener('click', closeSidebar);
+        sidebar?.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => { if (window.innerWidth < 768) closeSidebar(); });
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+    });
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

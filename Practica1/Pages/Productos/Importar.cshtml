@@ -41,8 +41,8 @@
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 100;
-        transition: width 0.3s ease;
+        z-index: 200;
+        transition: transform 0.3s ease;
     }
 
     .sidebar-logo {
@@ -99,7 +99,6 @@
         font-weight: 500;
         transition: all 0.2s ease;
         margin-bottom: 3px;
-        cursor: pointer;
         border: none;
         background: transparent;
         width: 100%;
@@ -342,6 +341,7 @@
         align-items: center;
         gap: 7px;
         text-decoration: none;
+        font-family: 'Inter', sans-serif;
     }
 
     .btn-import {
@@ -367,7 +367,6 @@
             color: #334155;
         }
 
-    /* RESULTADOS */
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -462,12 +461,55 @@
             background: #fff;
         }
 
+    /* MOBILE TOPBAR */
+    .mobile-topbar {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 62px;
+        background: rgba(240,244,248,0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.6);
+        z-index: 250;
+        align-items: center;
+        padding: 0 16px;
+    }
+
+    .menu-toggle {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #0f172a;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        flex-shrink: 0;
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 150;
+    }
+
+    /* TABLET */
     @@media (max-width: 1024px) {
         .sidebar {
             width: 70px;
         }
 
-        .sidebar-logo h2, .sidebar-logo p, .sidebar-section-title, .sidebar-item span, .user-details, .btn-logout-sidebar span {
+        .sidebar-logo h2, .sidebar-logo p, .sidebar-section-title,
+        .sidebar-item span, .user-details, .btn-logout-sidebar span {
             display: none;
         }
 
@@ -489,21 +531,79 @@
         }
     }
 
-    @@media (max-width: 768px) {
+    /* MOVIL */
+    @@media (max-width: 767px) {
+        .mobile-topbar {
+            display: flex;
+        }
+
         .sidebar {
-            display: none;
+            width: 240px;
+            transform: translateX(-100%);
+        }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+        .sidebar-logo h2, .sidebar-logo p, .sidebar-section-title,
+        .sidebar-item span, .user-details, .btn-logout-sidebar span {
+            display: block !important;
+        }
+
+        .sidebar-item {
+            justify-content: flex-start !important;
+            padding: 11px 12px !important;
+        }
+
+        .user-info {
+            justify-content: flex-start !important;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
         }
 
         .main-content {
             margin-left: 0;
-            padding: 20px 15px;
+            padding: 16px;
+            padding-top: 78px;
+        }
+
+        .topbar-title h1 {
+            font-size: 1.3rem;
+        }
+
+        .import-card {
+            max-width: 100%;
         }
 
         .stats-grid {
             grid-template-columns: 1fr;
         }
+
+        .form-footer {
+            flex-direction: column-reverse;
+            gap: 10px;
+        }
+
+            .form-footer .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
+
+        .upload-box {
+            padding: 30px 15px;
+        }
     }
 </style>
+
+<div class="mobile-topbar">
+    <button class="menu-toggle" id="menuToggle">
+        <i class="bi bi-list" id="menuIcon"></i>
+    </button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <div class="app-layout">
     <aside class="sidebar">
@@ -567,7 +667,6 @@
                     <i class="bi bi-info-circle-fill"></i>
                     <span>Formato requerido: <code>CodigoProducto, Nombre, Precio, Stock</code></span>
                 </div>
-
                 <form method="POST" enctype="multipart/form-data">
                     <div class="upload-box" id="dropZone" onclick="document.getElementById('fileInput').click()">
                         <i class="bi bi-filetype-csv"></i>
@@ -575,7 +674,6 @@
                         <p class="file-name" id="fileText">Ningun archivo seleccionado</p>
                     </div>
                     <input type="file" id="fileInput" name="FileCsv" accept=".csv" onchange="updateName(this)" />
-
                     <div class="form-footer" style="padding:0;background:none;border:0;margin-top:0;">
                         <a href="/Productos/Inicio" class="btn-action btn-cancel">
                             <i class="bi bi-x-lg"></i> Cancelar
@@ -658,5 +756,37 @@
                 }
             }
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const menuToggle   = document.getElementById('menuToggle');
+        const menuIcon     = document.getElementById('menuIcon');
+        const sidebar      = document.querySelector('.sidebar');
+        const overlay      = document.getElementById('sidebarOverlay');
+        const mobileTopbar = document.querySelector('.mobile-topbar');
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            menuIcon.classList.replace('bi-list', 'bi-x-lg');
+            mobileTopbar.style.display = 'none';
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+            menuIcon.classList.replace('bi-x-lg', 'bi-list');
+            mobileTopbar.style.display = 'flex';
+        }
+
+        menuToggle?.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+        overlay?.addEventListener('click', closeSidebar);
+        sidebar?.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => { if (window.innerWidth < 768) closeSidebar(); });
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
     });
 </script>

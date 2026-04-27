@@ -47,6 +47,8 @@
         left: 0;
         z-index: 100;
         transition: width 0.3s ease;
+        z-index: 200; /* ← cambia de 100 a 200 */
+        transition: transform 0.3s ease, width 0.3s ease; /* ← añade transform */
     }
 
     .sidebar-logo {
@@ -613,7 +615,65 @@
         font-size: 0.88rem;
     }
 
-    /* RESPONSIVE */
+    /* ── RESPONSIVE ── */
+
+    /* Botón hamburguesa (solo móvil) */
+    .mobile-topbar {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 62px;
+        background: rgba(240, 244, 248, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.6);
+        z-index: 250;
+        align-items: center;
+        padding: 0 16px;
+    }
+
+    .menu-toggle {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #0f172a;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: opacity 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    @@media (max-width: 767px) {
+        .mobile-topbar {
+            display: flex;
+        }
+
+        .main-content,
+        .main-wrapper {
+            margin-left: 0 !important;
+            width: 100% !important;
+            padding: 16px;
+            padding-top: 78px; /* altura barra + espacio */
+        }
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 150;
+    }
+
+    /* TABLET (768px - 1024px) */
     @@media (max-width: 1024px) {
         .sidebar {
             width: 70px;
@@ -649,37 +709,116 @@
         .stats-grid {
             grid-template-columns: 1fr 1fr;
         }
+
+        .topbar {
+            flex-wrap: wrap;
+            gap: 12px;
+        }
     }
 
-    @@media (max-width: 768px) {
+    @@media (max-width: 767px) {
+        .menu-toggle {
+            display: flex;
+        }
+
         .sidebar {
-            display: none;
+            transform: translateX(-100%); /* ← oculto por defecto en móvil */
+            width: 240px;
+            /* Restaura todo lo que el media de tablet ocultó */
+        }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        /* Restaurar textos del sidebar que el breakpoint tablet ocultó */
+        .sidebar-logo h2,
+        .sidebar-logo p,
+        .sidebar-section-title,
+        .sidebar-item span,
+        .user-details,
+        .btn-logout-sidebar span {
+            display: block !important;
+        }
+
+        .sidebar-item {
+            justify-content: flex-start !important;
+            padding: 11px 12px !important;
+        }
+
+        .user-info {
+            justify-content: flex-start !important;
+        }
+
+        .btn-logout-sidebar {
+            justify-content: center;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
         }
 
         .main-content {
             margin-left: 0;
             padding: 20px 15px;
+            padding-top: 70px;
         }
 
         .stats-grid {
             grid-template-columns: 1fr;
+            gap: 14px;
         }
 
         .topbar {
             flex-direction: column;
             align-items: flex-start;
-            gap: 15px;
+            gap: 14px;
+            padding-top: 10px;
+        }
+
+        .topbar-title h1 {
+            font-size: 1.3rem;
+        }
+
+        .btn-new-product {
+            width: 100%;
+            justify-content: center;
         }
 
         .table-card-header {
-            flex-direction: column;
-            align-items: stretch;
+            position: relative;
+            z-index: 1; /* menor que el botón hamburguesa */
+        }
+
+        .topbar-title h1 {
+            font-size: 1.3rem;
+        }
+
+        .topbar {
+            padding-top: 5px;
+        }
+        /* Stat cards no se solapan */
+        .stat-card {
+            padding: 18px;
+        }
+
+        .stat-info p {
+            font-size: 1.3rem;
+        }
+        /* Botones de acción en tabla móvil no se cortan */
+        .product-card-actions .btn-action {
+            font-size: 0.78rem;
+            padding: 8px 10px;
         }
 
         .search-box {
             min-width: unset;
+            width: 100%;
         }
 
+        #inputBusqueda {
+            width: 100%;
+        }
+        /* Ocultar tabla, mostrar tarjetas */
         .table-wrapper {
             display: none;
         }
@@ -695,50 +834,71 @@
             background: #fff;
             border: 1px solid #f1f5f9;
             border-radius: 16px;
-            padding: 18px;
+            padding: 16px;
         }
 
         .product-card-row {
             display: flex;
             justify-content: space-between;
-            padding: 9px 0;
+            align-items: center;
+            padding: 8px 0;
             border-bottom: 1px solid #f8fafc;
             font-size: 0.88rem;
+            gap: 10px;
         }
 
+            .product-card-row:last-of-type {
+                border-bottom: none;
+            }
+
         .product-card-label {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: #94a3b8;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
+            flex-shrink: 0;
         }
 
         .product-card-value {
             font-weight: 600;
             color: #0f172a;
+            text-align: right;
         }
 
         .product-card-actions {
             display: flex;
             gap: 8px;
-            margin-top: 14px;
+            margin-top: 12px;
             flex-wrap: wrap;
         }
 
             .product-card-actions .btn-action {
                 flex: 1;
                 justify-content: center;
+                min-width: 80px;
             }
+
+        .pagination-container {
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
     }
 
-    @@media (min-width: 769px) {
+    @@media (min-width: 768px) {
         .product-cards {
             display: none;
         }
     }
 </style>
-
+<!-- Botón hamburguesa -->
+<div class="mobile-topbar">
+    <button class="menu-toggle" id="menuToggle">
+        <i class="bi bi-list" id="menuIcon"></i>
+    </button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="app-layout">
 
     <!-- SIDEBAR -->
@@ -899,18 +1059,20 @@
                                     </td>
                                     <td style="color:#94a3b8;font-size:0.82rem;">@producto.FechaCreacion.ToShortDateString()</td>
                                     <td>
-                                        @if (currentUserId == producto.UsuarioId.ToString() || User.IsInRole("Admin"))
-                                        {
-                                            <a class="btn-action btn-edit" asp-page="Editar" asp-route-id="@producto.Id">
-                                                <i class="bi bi-pencil-square"></i> Editar
+                                        <div style="display:flex;flex-direction:row;gap:6px;align-items:center;flex-wrap:nowrap;">
+                                            @if (currentUserId == producto.UsuarioId.ToString() || User.IsInRole("Admin"))
+                                            {
+                                                <a class="btn-action btn-edit" asp-page="Editar" asp-route-id="@producto.Id">
+                                                    <i class="bi bi-pencil-square"></i> Editar
+                                                </a>
+                                                <a class="btn-action btn-delete" asp-page="Borrar" asp-route-id="@producto.Id">
+                                                    <i class="bi bi-trash3"></i> Borrar
+                                                </a>
+                                            }
+                                            <a class="btn-action btn-detail" asp-page="Detalle" asp-route-id="@producto.Id">
+                                                <i class="bi bi-eye"></i> Ver
                                             </a>
-                                            <a class="btn-action btn-delete" asp-page="Borrar" asp-route-id="@producto.Id">
-                                                <i class="bi bi-trash3"></i> Borrar
-                                            </a>
-                                        }
-                                        <a class="btn-action btn-detail" asp-page="Detalle" asp-route-id="@producto.Id">
-                                            <i class="bi bi-eye"></i> Ver
-                                        </a>
+                                        </div>
                                     </td>
                                 </tr>
                             }
@@ -1049,5 +1211,43 @@
             });
             Toast.fire({ icon: tipo || 'success', title: mensaje });
         }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const menuToggle  = document.getElementById('menuToggle');
+        const menuIcon    = document.getElementById('menuIcon');
+        const sidebar     = document.querySelector('.sidebar');
+        const overlay     = document.getElementById('sidebarOverlay');
+        const mobileTopbar = document.querySelector('.mobile-topbar'); // ← barra entera
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            menuIcon.classList.replace('bi-list', 'bi-x-lg');
+            mobileTopbar.style.display = 'none'; // ← oculta la barra completa
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+            menuIcon.classList.replace('bi-x-lg', 'bi-list');
+            mobileTopbar.style.display = 'flex'; // ← vuelve a mostrarla
+        }
+
+        menuToggle?.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+        overlay?.addEventListener('click', closeSidebar);
+        sidebar?.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth < 768) closeSidebar();
+            });
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeSidebar();
+        });
     });
 </script>

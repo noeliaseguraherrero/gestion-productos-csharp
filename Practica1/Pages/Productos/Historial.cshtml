@@ -41,8 +41,8 @@
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 100;
-        transition: width 0.3s ease;
+        z-index: 200; /* ← cambia de 100 a 200 */
+        transition: transform 0.3s ease, width 0.3s ease; /* ← añade transform */
     }
 
     .sidebar-logo {
@@ -569,13 +569,57 @@
         color: #94a3b8;
         font-size: 0.88rem;
     }
+    /* BARRA MÓVIL */
+    .mobile-topbar {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 62px;
+        background: rgba(240, 244, 248, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.6);
+        z-index: 250;
+        align-items: center;
+        padding: 0 16px;
+    }
 
+    .menu-toggle {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #0f172a;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: opacity 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 150;
+    }
+
+    /* TABLET */
     @@media (max-width: 1024px) {
         .sidebar {
             width: 70px;
         }
 
-        .sidebar-logo h2, .sidebar-logo p, .sidebar-section-title, .sidebar-item span, .user-details, .btn-logout-sidebar span {
+        .sidebar-logo h2, .sidebar-logo p,
+        .sidebar-section-title, .sidebar-item span,
+        .user-details, .btn-logout-sidebar span {
             display: none;
         }
 
@@ -599,29 +643,188 @@
         .stats-grid {
             grid-template-columns: 1fr 1fr;
         }
+
+        .table-card-header {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .filters-bar {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .filter-select, .filter-input, .btn-filter, .btn-clear {
+            width: 100%;
+            justify-content: center;
+        }
     }
 
-    @@media (max-width: 768px) {
+    /* MÓVIL */
+    @@media (max-width: 767px) {
+        .mobile-topbar {
+            display: flex;
+        }
+
         .sidebar {
-            display: none;
+            width: 240px;
+            transform: translateX(-100%);
+        }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+        .sidebar-logo h2, .sidebar-logo p,
+        .sidebar-section-title, .sidebar-item span,
+        .user-details, .btn-logout-sidebar span {
+            display: block !important;
+        }
+
+        .sidebar-item {
+            justify-content: flex-start !important;
+            padding: 11px 12px !important;
+        }
+
+        .user-info {
+            justify-content: flex-start !important;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
         }
 
         .main-content {
-            margin-left: 0;
-            padding: 20px 15px;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
+            margin-left: 0 !important;
+            width: 100% !important;
+            padding: 16px;
+            padding-top: 78px;
+            min-width: 0;
         }
 
         .topbar {
             flex-direction: column;
             align-items: flex-start;
-            gap: 15px;
+            gap: 12px;
+        }
+
+        .topbar-title h1 {
+            font-size: 1.3rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .stat-card {
+            padding: 18px;
+        }
+
+        .stat-info p {
+            font-size: 1.3rem;
+        }
+
+        .table-card-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 14px;
+            padding: 16px;
+        }
+
+        .filters-bar {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+        }
+
+        .filter-select, .filter-input {
+            width: 100%;
+        }
+
+        .btn-filter, .btn-clear {
+            width: 100%;
+            justify-content: center;
+        }
+        /* Ocultar tabla, mostrar tarjetas */
+        .table-wrapper {
+            display: none;
+        }
+
+        .history-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 15px;
+        }
+
+        .history-card {
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 14px;
+            padding: 14px 16px;
+        }
+
+        .history-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .history-card-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 7px 0;
+            border-bottom: 1px solid #f8fafc;
+            font-size: 0.85rem;
+            gap: 10px;
+        }
+
+            .history-card-row:last-child {
+                border-bottom: none;
+            }
+
+        .history-card-label {
+            font-size: 0.68rem;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            flex-shrink: 0;
+            min-width: 70px;
+        }
+
+        .history-card-value {
+            font-weight: 500;
+            color: #334155;
+            text-align: right;
+            font-size: 0.85rem;
+        }
+
+        .pagination-container {
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .history-cards {
+            display: none;
         }
     }
 </style>
+
+<div class="mobile-topbar">
+    <button class="menu-toggle" id="menuToggle">
+        <i class="bi bi-list" id="menuIcon"></i>
+    </button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <div class="app-layout">
     <aside class="sidebar">
@@ -791,6 +994,51 @@
                 </table>
             </div>
 
+            <!-- TARJETAS HISTORIAL MÓVIL -->
+            <div class="history-cards">
+                @if (Model.Historial.Any())
+                {
+                    @foreach (var item in Model.Historial)
+                    {
+                        <div class="history-card">
+                            <div class="history-card-top">
+                                <span class="badge-accion @(item.Accion == "Crear" ? "badge-crear" : item.Accion == "Editar" ? "badge-editar" : "badge-eliminar")">
+                                    <i class="bi @(item.Accion == "Crear" ? "bi-plus-circle" : item.Accion == "Editar" ? "bi-pencil-square" : "bi-trash3")"></i>
+                                    @item.Accion
+                                </span>
+                                <span style="color:#94a3b8;font-size:0.78rem;">@item.Fecha.ToString("dd/MM/yyyy HH:mm")</span>
+                            </div>
+                            <div class="history-card-row">
+                                <span class="history-card-label">Producto</span>
+                                <span class="history-card-value">@item.NombreProducto</span>
+                            </div>
+                            <div class="history-card-row">
+                                <span class="history-card-label">Codigo</span>
+                                <span class="history-card-value">@item.CodigoProducto</span>
+                            </div>
+                            <div class="history-card-row">
+                                <span class="history-card-label">Usuario</span>
+                                <span class="history-card-value">@item.Usuario?.Nombre</span>
+                            </div>
+                            <div class="history-card-row">
+                                <span class="history-card-label">Cambios</span>
+                                <span class="history-card-value" style="color:#64748b;font-size:0.8rem;">
+                                    @item.Detalles.Replace("?", "→")
+                                </span>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="bi bi-search"></i></div>
+                        <h3>Sin resultados</h3>
+                        <p>No hay registros que coincidan.</p>
+                    </div>
+                }
+            </div>
+
             @if (Model.TotalPaginas > 1)
             {
                 <div class="pagination-container">
@@ -820,3 +1068,36 @@
         </div>
     </main>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const menuToggle   = document.getElementById('menuToggle');
+        const menuIcon     = document.getElementById('menuIcon');
+        const sidebar      = document.querySelector('.sidebar');
+        const overlay      = document.getElementById('sidebarOverlay');
+        const mobileTopbar = document.querySelector('.mobile-topbar');
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            menuIcon.classList.replace('bi-list', 'bi-x-lg');
+            mobileTopbar.style.display = 'none';
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+            menuIcon.classList.replace('bi-x-lg', 'bi-list');
+            mobileTopbar.style.display = 'flex';
+        }
+
+        menuToggle?.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+        overlay?.addEventListener('click', closeSidebar);
+        sidebar?.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => { if (window.innerWidth < 768) closeSidebar(); });
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+    });
+</script>

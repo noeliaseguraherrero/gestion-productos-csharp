@@ -8,9 +8,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-    /* SIDEBAR EXACTO */
     nav, .navbar, footer, header:not(.header-home) {
         display: none !important;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
     }
 
     body {
@@ -19,11 +22,11 @@
         width: 100%;
         min-height: 100vh;
         font-family: 'Inter', sans-serif;
-        background-color: #f8fafc;
-        color: #1e293b;
+        background: linear-gradient(135deg, #f0f4f8 0%, #e8edf2 100%);
+        color: #1a1a2e;
     }
 
-    .app-container {
+    .app-layout {
         display: flex;
         min-height: 100vh;
     }
@@ -39,8 +42,8 @@
         position: fixed;
         top: 0;
         left: 0;
-        z-index: 100;
-        transition: width 0.3s ease;
+        z-index: 200;
+        transition: transform 0.3s ease;
     }
 
     .sidebar-logo {
@@ -97,7 +100,6 @@
         font-weight: 500;
         transition: all 0.2s ease;
         margin-bottom: 3px;
-        cursor: pointer;
         border: none;
         background: transparent;
         width: 100%;
@@ -118,6 +120,7 @@
             font-size: 1rem;
             width: 20px;
             text-align: center;
+            flex-shrink: 0;
         }
 
     .sidebar-bottom {
@@ -192,100 +195,146 @@
             color: white;
         }
 
-    /* CONTENIDO ESPECIFICO BORRAR */
-    .main-wrapper {
-        margin-left: 280px;
+    /* MAIN */
+    .main-content {
+        margin-left: 240px;
         flex: 1;
-        padding: 40px;
+        padding: 30px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
+    .topbar {
+        width: 100%;
+        max-width: 600px;
+        margin-bottom: 24px;
+    }
+
+    .topbar-title h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+
+    .topbar-title p {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin: 4px 0 0 0;
+    }
+
+    /* CARD */
     .delete-card {
         background: #fff;
-        border-radius: 24px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.02);
-        border: 1px solid #fee2e2;
+        border-radius: 20px;
+        border: 1px solid #fecdd3;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+        width: 100%;
         max-width: 600px;
-        margin: 0 auto;
         overflow: hidden;
     }
 
     .warning-header {
-        background: #fef2f2;
-        padding: 30px;
-        border-bottom: 1px solid #fee2e2;
+        background: #fff1f2;
+        padding: 24px 28px;
+        border-bottom: 1px solid #fecdd3;
         display: flex;
         align-items: center;
-        gap: 20px;
-        color: #991b1b;
+        gap: 16px;
     }
 
-        .warning-header i {
-            font-size: 2.5rem;
-        }
+    .warning-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        background: #fee2e2;
+        color: #be123c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        flex-shrink: 0;
+    }
 
-        .warning-header h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            font-weight: 800;
-        }
+    .warning-header h2 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #9f1239;
+    }
+
+    .warning-header p {
+        margin: 4px 0 0 0;
+        color: #be123c;
+        font-size: 0.85rem;
+    }
 
     .info-body {
-        padding: 30px;
+        padding: 28px;
     }
 
     .info-group {
-        margin-bottom: 18px;
-        padding-bottom: 14px;
-        border-bottom: 1px solid #f1f5f9;
+        padding: 14px 0;
+        border-bottom: 1px solid #f8fafc;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
+        .info-group:last-child {
+            border-bottom: none;
+        }
+
     .info-label {
-        display: block;
-        font-size: 0.7rem;
+        font-size: 0.72rem;
         font-weight: 700;
-        color: #64748b;
+        color: #94a3b8;
         text-transform: uppercase;
-        margin-bottom: 4px;
+        letter-spacing: 0.8px;
     }
 
     .info-value {
-        font-size: 1.1rem;
+        font-size: 0.95rem;
         font-weight: 600;
         color: #0f172a;
     }
 
-    /* BOTONES ESTILO CREAR */
     .form-footer {
-        padding: 24px 30px;
+        padding: 20px 28px;
         background: #f8fafc;
         border-top: 1px solid #f1f5f9;
         display: flex;
         justify-content: flex-end;
-        gap: 12px;
+        gap: 10px;
     }
 
     .btn-action {
-        padding: 12px 24px;
-        border-radius: 12px;
+        padding: 10px 22px;
+        border-radius: 10px;
         font-weight: 700;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         border: none;
         cursor: pointer;
-        transition: all 0.2s;
-        display: flex;
+        transition: all 0.2s ease;
+        display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 7px;
         text-decoration: none;
     }
 
     .btn-delete {
-        background: #ef4444;
+        background: linear-gradient(135deg, #be123c, #ef4444);
         color: white;
+        box-shadow: 0 4px 15px rgba(239,68,68,0.3);
     }
 
         .btn-delete:hover {
-            background: #dc2626;
             transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239,68,68,0.4);
+            color: white;
         }
 
     .btn-cancel {
@@ -296,87 +345,300 @@
 
         .btn-cancel:hover {
             background: #f1f5f9;
+            color: #334155;
         }
+
+    /* MOBILE TOPBAR */
+    .mobile-topbar {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 62px;
+        background: rgba(240,244,248,0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.6);
+        z-index: 250;
+        align-items: center;
+        padding: 0 16px;
+    }
+
+    .menu-toggle {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #0f172a;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        flex-shrink: 0;
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 150;
+    }
+
+    /* TABLET */
+    @@media (max-width: 1024px) {
+        .sidebar {
+            width: 70px;
+        }
+
+        .sidebar-logo h2, .sidebar-logo p, .sidebar-section-title,
+        .sidebar-item span, .user-details, .btn-logout-sidebar span {
+            display: none;
+        }
+
+        .sidebar-item {
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .user-info {
+            justify-content: center;
+        }
+
+        .btn-logout-sidebar {
+            justify-content: center;
+        }
+
+        .main-content {
+            margin-left: 70px;
+        }
+    }
+
+    /* MOVIL */
+    @@media (max-width: 767px) {
+        .mobile-topbar {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 240px;
+            transform: translateX(-100%);
+        }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+        .sidebar-logo h2, .sidebar-logo p, .sidebar-section-title,
+        .sidebar-item span, .user-details, .btn-logout-sidebar span {
+            display: block !important;
+        }
+
+        .sidebar-item {
+            justify-content: flex-start !important;
+            padding: 11px 12px !important;
+        }
+
+        .user-info {
+            justify-content: flex-start !important;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 16px;
+            padding-top: 78px;
+            align-items: stretch;
+        }
+
+        .topbar {
+            max-width: 100%;
+        }
+
+        .topbar-title h1 {
+            font-size: 1.3rem;
+        }
+
+        .delete-card {
+            max-width: 100%;
+            border-radius: 16px;
+        }
+
+        .warning-header {
+            padding: 16px;
+            gap: 12px;
+        }
+
+        .warning-icon {
+            width: 44px;
+            height: 44px;
+            font-size: 1.2rem;
+        }
+
+        .warning-header h2 {
+            font-size: 0.95rem;
+        }
+
+        .warning-header p {
+            font-size: 0.8rem;
+        }
+
+        .info-body {
+            padding: 16px;
+        }
+
+        .info-group {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            padding: 12px 0;
+        }
+
+        .form-footer {
+            padding: 16px;
+            flex-direction: column-reverse;
+            gap: 10px;
+        }
+
+            .form-footer .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
+    }
 </style>
 
-<div class="app-container">
-    <!-- SIDEBAR -->
+<div class="mobile-topbar">
+    <button class="menu-toggle" id="menuToggle">
+        <i class="bi bi-list" id="menuIcon"></i>
+    </button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app-layout">
     <aside class="sidebar">
         <div class="sidebar-logo">
             <h2>Becarios<span>BD</span></h2>
             <p>Panel de Control</p>
         </div>
-
         <div class="sidebar-section">
             <p class="sidebar-section-title">Principal</p>
-            <a class="sidebar-item" href="/Productos/Inicio">
-                <i class="bi bi-grid-1x2-fill"></i>
-                <span>Productos</span>
+            <a class="sidebar-item" asp-page="/Productos/Inicio">
+                <i class="bi bi-grid-1x2-fill"></i><span>Productos</span>
             </a>
             @if (User.IsInRole("Admin"))
             {
                 <a class="sidebar-item" asp-page="/Usuarios/Index">
-                    <i class="bi bi-people-fill"></i>
-                    <span>Usuarios</span>
+                    <i class="bi bi-people-fill"></i><span>Usuarios</span>
                 </a>
                 <a class="sidebar-item" asp-page="./Historial">
-                    <i class="bi bi-clock-history"></i>
-                    <span>Historial</span>
+                    <i class="bi bi-clock-history"></i><span>Historial</span>
                 </a>
             }
         </div>
-
         <div class="sidebar-section">
             <p class="sidebar-section-title">Herramientas</p>
             <a class="sidebar-item" asp-page="Importar">
-                <i class="bi bi-file-earmark-arrow-up"></i>
-                <span>Importar CSV</span>
+                <i class="bi bi-file-earmark-arrow-up"></i><span>Importar CSV</span>
             </a>
             <a class="sidebar-item" asp-page="Crear">
-                <a class="sidebar-item" href="#">
-                    <i class="bi bi-plus-circle"></i>
-                    <span>Nuevo Producto</span>
-                </a>
+                <i class="bi bi-plus-circle"></i><span>Nuevo Producto</span>
             </a>
         </div>
-
         <div class="sidebar-bottom">
             <div class="user-info">
-                <div class="user-avatar">
-                    @User.Identity.Name?.Substring(0, 1).ToUpper()
-                </div>
+                <div class="user-avatar">@User.Identity.Name?.Substring(0, 1).ToUpper()</div>
                 <div class="user-details">
                     <div class="user-name">@User.Identity.Name</div>
                     <div class="user-role">@(User.IsInRole("Admin") ? "Administrador" : "Usuario")</div>
                 </div>
             </div>
             <a asp-page="/Index" asp-page-handler="Logout" class="btn-logout-sidebar">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Cerrar Sesion</span>
+                <i class="bi bi-box-arrow-right"></i><span>Cerrar Sesion</span>
             </a>
         </div>
     </aside>
 
-    <main class="main-wrapper">
+    <main class="main-content">
+        <div class="topbar">
+            <div class="topbar-title">
+                <h1>Eliminar Producto</h1>
+                <p>Confirma que deseas eliminar este registro del inventario</p>
+            </div>
+        </div>
+
         <div class="delete-card">
             <div class="warning-header">
-                <i class="bi bi-exclamation-triangle-fill"></i>
+                <div class="warning-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
                 <div>
-                    <h1>Eliminar Producto</h1>
-                    <p style="margin:0; font-size:0.85rem">¿Estás seguro? Esta acción es irreversible.</p>
+                    <h2>Accion Irreversible</h2>
+                    <p>Este producto sera eliminado permanentemente del sistema</p>
                 </div>
             </div>
             <div class="info-body">
-                <div class="info-group"><span class="info-label">Nombre</span><span class="info-value">@Model.Producto.Nombre</span></div>
-                <div class="info-group"><span class="info-label">Código</span><span class="info-value">@Model.Producto.CodigoProducto</span></div>
-                <div class="info-group"><span class="info-label">Stock a eliminar</span><span class="info-value">@Model.Producto.Stock unidades</span></div>
+                <div class="info-group">
+                    <span class="info-label">Nombre</span>
+                    <span class="info-value">@Model.Producto.Nombre</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Codigo</span>
+                    <span class="info-value">@Model.Producto.CodigoProducto</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Stock a eliminar</span>
+                    <span class="info-value">@Model.Producto.Stock unidades</span>
+                </div>
             </div>
             <form method="post">
                 <div class="form-footer">
-                    <a href="/Productos/Inicio" class="btn-action btn-cancel">Cancelar</a>
-                    <button type="submit" class="btn-action btn-delete"><i class="bi bi-trash3-fill"></i> Confirmar</button>
+                    <a href="/Productos/Inicio" class="btn-action btn-cancel">
+                        <i class="bi bi-x-lg"></i> Cancelar
+                    </a>
+                    <button type="submit" class="btn-action btn-delete">
+                        <i class="bi bi-trash3-fill"></i> Confirmar Eliminacion
+                    </button>
                 </div>
             </form>
         </div>
     </main>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const menuToggle  = document.getElementById('menuToggle');
+        const menuIcon    = document.getElementById('menuIcon');
+        const sidebar     = document.querySelector('.sidebar');
+        const overlay     = document.getElementById('sidebarOverlay');
+        const mobileTopbar = document.querySelector('.mobile-topbar');
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            menuIcon.classList.replace('bi-list', 'bi-x-lg');
+            mobileTopbar.style.display = 'none';
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+            menuIcon.classList.replace('bi-x-lg', 'bi-list');
+            mobileTopbar.style.display = 'flex';
+        }
+
+        menuToggle?.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+        overlay?.addEventListener('click', closeSidebar);
+        sidebar?.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => { if (window.innerWidth < 768) closeSidebar(); });
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+    });
+</script>
