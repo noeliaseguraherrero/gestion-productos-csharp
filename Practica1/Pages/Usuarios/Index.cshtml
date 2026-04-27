@@ -799,37 +799,6 @@
                                 </td>
                             </tr>
 
-                            <div class="modal fade" id="modalEditar-@usuario.Id" tabindex="-1">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <form method="post" asp-page-handler="Editar" asp-route-id="@usuario.Id">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Editar: @usuario.Nombre</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label class="modal-label">Contrasena Actual</label>
-                                                    <div style="padding:10px 14px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;font-family:monospace;font-size:0.88rem;color:#475569;">@usuario.Contraseña</div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="modal-label">Nueva Contrasena</label>
-                                                    <input type="password" name="nuevaPass" class="form-control" placeholder="Dejar vacio para no cambiar">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="modal-label">Rol</label>
-                                                    <select name="nuevoRol" class="form-select">
-                                                        <option value="Usuario" selected="@(usuario.Rol == "Usuario")">Usuario</option>
-                                                        <option value="Admin" selected="@(usuario.Rol == "Admin")">Administrador</option>
-                                                    </select>
-                                                </div>
-                                                <button type="submit" class="btn-save-modal mt-2">Guardar Cambios</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
                         }
                     </tbody>
                 </table>
@@ -908,6 +877,40 @@
         </div>
     </div>
 </div>
+@foreach (var usuario in Model.Usuarios)
+{
+    <div class="modal fade" id="modalEditar-@usuario.Id" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="post" asp-page-handler="Editar" asp-route-id="@usuario.Id">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar: @usuario.Nombre</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="modal-label">Contrasena Actual</label>
+                            <div style="padding:10px 14px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;font-family:monospace;font-size:0.88rem;color:#475569;">@usuario.Contraseña</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="modal-label">Nueva Contrasena</label>
+                            <input type="password" name="nuevaPass" class="form-control" placeholder="Dejar vacio para no cambiar">
+                        </div>
+                        <div class="mb-3">
+                            <label class="modal-label">Rol</label>
+                            <select name="nuevoRol" class="form-select">
+                                <option value="Usuario" selected="@(usuario.Rol == "Usuario")">Usuario</option>
+                                <option value="Admin" selected="@(usuario.Rol == "Admin")">Administrador</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-save-modal mt-2">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
