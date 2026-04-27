@@ -1,7 +1,8 @@
 # Sistema de Gestión de Inventario y Usuarios 
 
-> **Aplicación Web con ASP.NET Core Razor Pages**
+![Responsive Design](https://img.shields.io/badge/Responsive-Design-2ea44f?style=for-the-badge&logo=airplay)
 
+> **Aplicación Web con ASP.NET Core Razor Pages**
 Esta plataforma es una solución integral para el control de inventarios y la administración avanzada de usuarios. Utiliza el modelo de desarrollo basado en páginas de **ASP.NET Core (Razor Pages)**, lo que permite una arquitectura robusta, segura y escalable.
 
 ## 📋 Funcionalidades Principales
