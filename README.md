@@ -1,3 +1,5 @@
+<img width="1920" height="1064" alt="imgLogin2" src="https://github.com/user-attachments/assets/823b22c7-c707-49ff-b2b5-62c04a05f7a8" />
+<img width="1920" height="1065" alt="imgContraseña2" src="https://github.com/user-attachments/assets/7f998f5e-7fe1-401a-89de-e3b12166cba3" />
 # Sistema de Gestión de Inventario y Usuarios 
 
 > **Aplicación Web con ASP.NET Core Razor Pages**
@@ -37,10 +39,10 @@ Esta plataforma es una solución integral para el control de inventarios y la ad
 ## 📸 Vista previa
 
 * ### Inicio de Sesión / Login
-<img width="1920" height="908" alt="imgLogin" src="https://github.com/user-attachments/assets/aa895139-d16b-4b7b-9136-a0a38c791729" />
+<img width="1920" height="1064" alt="imgLogin2" src="https://github.com/user-attachments/assets/40c4c152-e240-4fef-81b6-ed92c5d24786" />
 
 * ### Recuperación de Contraseña
-<img width="1920" height="908" alt="imgRecuperarContraseña" src="https://github.com/user-attachments/assets/7b16af68-15b4-4290-a449-a544b3ab7323" />
+<img width="1920" height="1065" alt="imgContraseña2" src="https://github.com/user-attachments/assets/9411d057-eb25-488c-a1c2-ebd49831e558" />
 
 * ### Listado y Gestión de Productos
 <img width="1897" height="917" alt="imgIndex" src="https://github.com/user-attachments/assets/38c977a2-f6f7-4151-bcc5-5654c93a3c3c" />
