@@ -35,26 +35,23 @@ Esta plataforma es una solución integral para el control de inventarios y la ad
 * **Models:** Clases que definen las entidades de negocio (Producto con atributo de código único, Usuario, Roles).
 * **Data:** Capa de persistencia y configuración del contexto de la base de datos.
 
-## 📸 Vista previa
+## 📸 Vistas de la Aplicación
 
-* ### Inicio de Sesión / Login
-<img width="1920" height="1064" alt="imgLogin2" src="https://github.com/user-attachments/assets/40c4c152-e240-4fef-81b6-ed92c5d24786" />
+> [!TIP]
+> Cada sección de la plataforma ha sido diseñada para ser 100% funcional y responsive. Las siguientes capturas muestran los puntos clave, pero el sistema integra una experiencia de navegación mucho más completa.
 
-* ### Recuperación de Contraseña
-<img width="1920" height="1065" alt="imgContraseña2" src="https://github.com/user-attachments/assets/9411d057-eb25-488c-a1c2-ebd49831e558" />
+| **Inicio de Sesión / Login** | **Recuperación de Contraseña** |
+|:---:|:---:|
+| <img alt="imgLogin2" src="https://github.com/user-attachments/assets/40c4c152-e240-4fef-81b6-ed92c5d24786" /> | <img alt="imgContraseña2" src="https://github.com/user-attachments/assets/9411d057-eb25-488c-a1c2-ebd49831e558" /> |
 
-* ### Listado y Gestión de Productos
-<img width="1897" height="917" alt="imgIndex" src="https://github.com/user-attachments/assets/38c977a2-f6f7-4151-bcc5-5654c93a3c3c" />
+| **Listado y Gestión de Productos** | **Gestión de Usuarios (Admin)** |
+|:---:|:---:|
+| <img alt="imgIndex" src="https://github.com/user-attachments/assets/38c977a2-f6f7-4151-bcc5-5654c93a3c3c" /> | <img alt="imgControlUsuarios" src="https://github.com/user-attachments/assets/e725bb84-82b4-4837-a411-3ba2abfe3f53" /> |
 
-* ### Gestión de Usuarios (Admin)
-<img width="1896" height="908" alt="imgControlUsuarios" src="https://github.com/user-attachments/assets/e725bb84-82b4-4837-a411-3ba2abfe3f53" />
+| **Historial de Actividad (Admin)** | **Importación de Productos** |
+|:---:|:---:|
+| <img alt="imgHistorial" src="https://github.com/user-attachments/assets/58fd367c-9944-4ea1-a55f-484940132eb0" /> | <img alt="imgImportar" src="https://github.com/user-attachments/assets/27b5dd6a-dd92-4b6c-a473-b9c52c3266b6" /> |
 
-* ### Historial de Actividad (Admin)
-<img width="1892" height="915" alt="imgHistorial" src="https://github.com/user-attachments/assets/58fd367c-9944-4ea1-a55f-484940132eb0" />
-
-* ### Importación de Productos vía Archivo
-<img width="1896" height="912" alt="imgImportar" src="https://github.com/user-attachments/assets/27b5dd6a-dd92-4b6c-a473-b9c52c3266b6" />
-
-* ### Formulario de Alta de Producto
-<img width="1893" height="911" alt="imgAñadirProducto" src="https://github.com/user-attachments/assets/e78674f3-6365-4369-9bcf-ab43bb92aa17" />
-
+| **Formulario de Alta de Producto** | |
+|:---:|:---:|
+| <img alt="imgAñadirProducto" src="https://github.com/user-attachments/assets/e78674f3-6365-4369-9bcf-ab43bb92aa17" /> | |
