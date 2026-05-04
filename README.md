@@ -46,7 +46,7 @@ Esta plataforma es una solución integral para el control de inventarios y la ad
 
 | **Listado y Gestión de Productos** | **Gestión de Usuarios (Admin)** |
 |:---:|:---:|
-| <img alt="imgIndex" src="https://github.com/user-attachments/assets/38c977a2-f6f7-4151-bcc5-5654c93a3c3c" /> | <img alt="imgControlUsuarios" src="https://github.com/user-attachments/assets/e725bb84-82b4-4837-a411-3ba2abfe3f53" /> |
+| <img width="1903" height="1068" alt="imgInicio" src="https://github.com/user-attachments/assets/b23d209e-eb47-4146-a7f0-1697108622fc" /> | <img alt="imgControlUsuarios" src="https://github.com/user-attachments/assets/e725bb84-82b4-4837-a411-3ba2abfe3f53" /> |
 
 | **Historial de Actividad (Admin)** | **Importación de Productos** |
 |:---:|:---:|
