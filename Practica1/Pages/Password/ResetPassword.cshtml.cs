@@ -66,7 +66,7 @@ namespace Practica1.Pages.Password
 
             // 4. Enviar correo de confirmacion
             await _emailService.EnviarEmailAsync(
-                destinatario: usuario.Email!, asunto: "Contrasena actualizada - BecariosBD",
+                destinatario: usuario.Email!, asunto: "Contraseña actualizada - BecariosBD",
 cuerpoHtml: $@"
 <div style='font-family:Inter,Arial,sans-serif;background:#f1f5f9;padding:40px 20px;'>
     <div style='max-width:480px;margin:0 auto;'>
@@ -86,10 +86,10 @@ cuerpoHtml: $@"
 
             <h2 style='color:#0f172a;font-size:1.15rem;font-weight:800;
                        margin:0 0 8px 0;letter-spacing:-0.5px;'>
-                Contrasena actualizada
+                Contraseña actualizada
             </h2>
             <p style='color:#64748b;font-size:0.88rem;line-height:1.7;margin:0 0 25px 0;'>
-                Tu contrasena ha sido modificada correctamente. Ya puedes acceder al sistema.
+                Tu contraseña ha sido modificada correctamente. Ya puedes acceder al sistema.
             </p>
 
             <!-- CONFIRMACION -->
@@ -118,14 +118,14 @@ cuerpoHtml: $@"
                           background:#1d4ed8;color:#fff;border-radius:10px;
                           text-decoration:none;font-weight:700;font-size:0.85rem;
                           text-transform:uppercase;letter-spacing:1.5px;'>
-                    Ir al Inicio de Sesion
+                    Ir al Inicio de Sesión
                 </a>
             </div>
 
             <!-- PIE -->
             <p style='color:#94a3b8;font-size:0.78rem;text-align:center;
                       margin:0;line-height:1.7;border-top:1px solid #f1f5f9;padding-top:20px;'>
-                Este es un correo automatico, no respondas a este mensaje.
+                Este es un correo automático, no respondas a este mensaje.
             </p>
         </div>
     </div>

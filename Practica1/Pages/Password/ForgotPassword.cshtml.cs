@@ -55,7 +55,7 @@ namespace Practica1.Pages.Password
                 );
 
                 await _emailService.EnviarEmailAsync(
-                    destinatario: usuario.Email!, asunto: "Recuperacion de contrasena - BecariosBD",
+                    destinatario: usuario.Email!, asunto: "Recuperacion de contraseña - BecariosBD",
 cuerpoHtml: $@"
 <div style='font-family:Inter,Arial,sans-serif;background:#f1f5f9;padding:40px 20px;'>
     <div style='max-width:480px;margin:0 auto;'>
@@ -75,36 +75,54 @@ cuerpoHtml: $@"
 
             <h2 style='color:#0f172a;font-size:1.15rem;font-weight:800;
                        margin:0 0 8px 0;letter-spacing:-0.5px;'>
-                Recuperar contrasena
+                Recuperar contraseña
             </h2>
             <p style='color:#64748b;font-size:0.88rem;line-height:1.7;margin:0 0 28px 0;'>
-                Hemos recibido una solicitud para restablecer la contrasena de tu cuenta.
+                Hemos recibido una solicitud para restablecer la contraseña de tu cuenta.
                 Sigue estos pasos:
             </p>
 
             <!-- PASOS -->
             <div style='margin-bottom:28px;'>
-                <div style='display:flex;align-items:center;gap:12px;margin-bottom:12px;'>
-                    <span style='width:22px;height:22px;border-radius:50%;background:#1d4ed8;
-                                 color:#fff;font-size:0.7rem;font-weight:800;
-                                 display:inline-flex;align-items:center;
-                                 justify-content:center;flex-shrink:0;'>1</span>
-                    <span style='color:#475569;font-size:0.85rem;'>Haz clic en el boton de abajo</span>
-                </div>
-                <div style='display:flex;align-items:center;gap:12px;margin-bottom:12px;'>
-                    <span style='width:22px;height:22px;border-radius:50%;background:#1d4ed8;
-                                 color:#fff;font-size:0.7rem;font-weight:800;
-                                 display:inline-flex;align-items:center;
-                                 justify-content:center;flex-shrink:0;'>2</span>
-                    <span style='color:#475569;font-size:0.85rem;'>Escribe tu nueva contrasena</span>
-                </div>
-                <div style='display:flex;align-items:center;gap:12px;'>
-                    <span style='width:22px;height:22px;border-radius:50%;background:#1d4ed8;
-                                 color:#fff;font-size:0.7rem;font-weight:800;
-                                 display:inline-flex;align-items:center;
-                                 justify-content:center;flex-shrink:0;'>3</span>
-                    <span style='color:#475569;font-size:0.85rem;'>Accede normalmente al sistema</span>
-                </div>
+                <table style='border-collapse:collapse;width:100%;margin-bottom:12px;'>
+                    <tr>
+                        <td style='width:22px;vertical-align:middle;'>
+                            <span style='width:22px;height:22px;border-radius:50%;background:#1d4ed8;
+                                         color:#fff;font-size:0.7rem;font-weight:800;
+                                         display:inline-block;line-height:22px;
+                                         text-align:center;'>1</span>
+                        </td>
+                        <td style='padding-left:10px;color:#475569;font-size:0.85rem;vertical-align:middle;'>
+                            Haz clic en el boton de abajo
+                        </td>
+                    </tr>
+                </table>
+                <table style='border-collapse:collapse;width:100%;margin-bottom:12px;'>
+                    <tr>
+                        <td style='width:22px;vertical-align:middle;'>
+                            <span style='width:22px;height:22px;border-radius:50%;background:#1d4ed8;
+                                         color:#fff;font-size:0.7rem;font-weight:800;
+                                         display:inline-block;line-height:22px;
+                                         text-align:center;'>2</span>
+                        </td>
+                        <td style='padding-left:10px;color:#475569;font-size:0.85rem;vertical-align:middle;'>
+                            Escribe tu nueva contraseña
+                        </td>
+                    </tr>
+                </table>
+                <table style='border-collapse:collapse;width:100%;'>
+                    <tr>
+                        <td style='width:22px;vertical-align:middle;'>
+                            <span style='width:22px;height:22px;border-radius:50%;background:#1d4ed8;
+                                         color:#fff;font-size:0.7rem;font-weight:800;
+                                         display:inline-block;line-height:22px;
+                                         text-align:center;'>3</span>
+                        </td>
+                        <td style='padding-left:10px;color:#475569;font-size:0.85rem;vertical-align:middle;'>
+                            Accede normalmente al sistema
+                        </td>
+                    </tr>
+                </table>
             </div>
 
             <!-- BOTON -->
@@ -114,7 +132,7 @@ cuerpoHtml: $@"
                           background:#1d4ed8;color:#fff;border-radius:10px;
                           text-decoration:none;font-weight:700;font-size:0.85rem;
                           text-transform:uppercase;letter-spacing:1.5px;'>
-                    Restablecer Contrasena
+                    Restablecer Contraseña
                 </a>
             </div>
 
