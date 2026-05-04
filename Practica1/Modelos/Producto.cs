@@ -17,7 +17,7 @@ namespace Practica1.Modelos
         [Required(ErrorMessage = "El nombre es obligatorio")]
         public string Nombre { get; set; }
 
-        [Range(0, 1000, ErrorMessage = "El precio debe estar entre 0 y 1000 usd")]
+        [Range(typeof(decimal), "0", "10000", ErrorMessage = "El precio debe estar entre 0 y 10000 usd")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Precio { get; set; }
 

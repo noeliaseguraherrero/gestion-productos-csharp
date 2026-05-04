@@ -29,7 +29,18 @@ builder.Services.Configure<SmtpSettings>(
     builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddScoped<EmailService>();
 
+// Añade esto antes de builder.Build()
+var supportedCultures = new[] { System.Globalization.CultureInfo.InvariantCulture };
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
 var app = builder.Build(); // ? Build siempre el último
+
+app.UseRequestLocalization();
 
 if (!app.Environment.IsDevelopment())
 {

@@ -63,7 +63,6 @@ namespace Practica1.Pages.Productos
                     "Ya existe un producto con ese código. Usa uno diferente.");
                 return Page();
             }
-
             // Guardar valores anteriores para el historial
             var precioAnterior = productoDb.Precio;
             var stockAnterior = productoDb.Stock;
@@ -72,24 +71,22 @@ namespace Practica1.Pages.Productos
             Producto.FechaCreacion = productoDb.FechaCreacion;
             _context.Attach(Producto).State = EntityState.Modified;
 
+            // Preparar el historial ANTES de guardar
+            var historial = new HistorialAccion
+            {
+                Accion = "Editar",
+                NombreProducto = Producto.Nombre,
+                CodigoProducto = Producto.CodigoProducto,
+                UsuarioId = int.Parse(userId),
+                Fecha = DateTime.Now,
+                Detalles = $"Precio: {precioAnterior} -> {Producto.Precio} | " +
+                           $"Stock: {stockAnterior} -> {Producto.Stock}"
+            };
+            _context.HistorialAcciones.Add(historial);
+
             try
             {
-                await _context.SaveChangesAsync();
-
-                // HISTORIAL
-                // Cambia la sección del historial a esto:
-                var historial = new HistorialAccion
-                {
-                    Accion = "Editar",
-                    NombreProducto = Producto.Nombre,
-                    CodigoProducto = Producto.CodigoProducto,
-                    UsuarioId = int.Parse(userId),
-                    Fecha = DateTime.Now,
-                    // Quitamos el símbolo € y lo cambiamos por la palabra o nada
-                    Detalles = $"Precio: {precioAnterior} -> {Producto.Precio} | " +
-                               $"Stock: {stockAnterior} -> {Producto.Stock}"
-                };
-                _context.HistorialAcciones.Add(historial);
+                // Una sola llamada guarda tanto el producto como el historial
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
